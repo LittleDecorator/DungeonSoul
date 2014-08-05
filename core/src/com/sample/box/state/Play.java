@@ -51,7 +51,7 @@ public class Play extends GameState {
         b2dCam.setToOrtho(false, Game.V_WIDTH/ B2DVars.PPM,Game.V_HEIGHT/ B2DVars.PPM);
 
         //load tile map
-        tiledMap = new TmxMapLoader().load("/home/nikolay/Projects/android/Box/desktop/res/maps/small.tmx");
+        tiledMap = new TmxMapLoader().load("maps/small.tmx");
         tmr = new OrthogonalTiledMapRenderer(tiledMap);
 
         TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get("floor");

@@ -43,7 +43,7 @@ public class Game implements ApplicationListener {
     public void create(){
         Gdx.input.setInputProcessor(new GameInputProcessor());
         res = new Content();
-        res.loadTexture("/home/nikolay/Projects/android/Box/desktop/res/img/volleyball_ball.png","ball");
+        res.loadTexture("img/volleyball_ball.png","ball");
         sb = new SpriteBatch();
         cam = new OrthographicCamera();
         cam.setToOrtho(false,Game.V_WIDTH,Game.V_HEIGHT);
