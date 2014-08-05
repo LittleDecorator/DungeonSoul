@@ -1,0 +1,10 @@
+build
+.classpath
+.project
+.settings
+local.properties
+.idea
+*.iml
+.metadata
+*.jar
+*.bat
