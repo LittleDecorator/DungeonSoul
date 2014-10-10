@@ -3,6 +3,8 @@ package com.sample.box.state;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -11,8 +13,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.utils.Array;
 import com.sample.box.Game;
 import com.sample.box.entities.Player;
+import com.sample.box.entities.Point;
 import com.sample.box.handlers.GameContactListener;
 import com.sample.box.handlers.GameInput;
 import com.sample.box.handlers.GameStateManager;
@@ -38,6 +42,9 @@ public class Play extends GameState {
     private OrthogonalTiledMapRenderer tmr;
 
     private Player player;
+    private Array<Point> points;
+
+    private boolean debug = false;
 
     public Play(GameStateManager gsm){
         super(gsm);
@@ -51,13 +58,25 @@ public class Play extends GameState {
         b2dCam.setToOrtho(false, Game.V_WIDTH/ B2DVars.PPM,Game.V_HEIGHT/ B2DVars.PPM);
 
         //load tile map
-        tiledMap = new TmxMapLoader().load("maps/small.tmx");
+        tiledMap = new TmxMapLoader().load("assets/maps/small.tmx");
+//        tiledMap = new TmxMapLoader().load(Gdx.files.internal("maps/small.tmx").path());
+
+        System.out.println("ex: "+Gdx.files.getExternalStoragePath());
+        System.out.println("loc: "+Gdx.files.getLocalStoragePath());
+
+        System.out.println(Gdx.files.external("assets/maps/tiles.png").exists()? "yes":"no");
+
+
+
         tmr = new OrthogonalTiledMapRenderer(tiledMap);
 
         TiledMapTileLayer layer = (TiledMapTileLayer) tiledMap.getLayers().get("floor");
         tileSize = (Integer) tiledMap.getProperties().get("tilewidth");
 
         createFloorBox(layer);
+
+        //create points
+        createPoints();
     }
 
     public void handleInput(){
@@ -69,16 +88,33 @@ public class Play extends GameState {
         }
         if(GameInput.isDown(GameInput.LEFT)){
             player.getBody().applyForceToCenter(-1, 0, true);
+        }else{
+            player.getBody().getLinearVelocity();
         }
+
     }
 
     public void update(float dt){
         handleInput();
         world.step(dt,6,2);
+
+        //remove points
+        Array<Body> bodies = cl.getBodiesToRemove();
+        for(int i=0; i < bodies.size;i++){
+            points.removeValue((Point)bodies.get(i).getUserData(),true);
+            world.destroyBody(bodies.get(i));
+            player.collectCrystals();
+        }
+        bodies.clear();
+
         player.update(dt);
+        for(int i=0; i < points.size;i++){
+            points.get(i).update(dt);
+        }
     }
 
     public void render(){
+
         //clear screen
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //draw tile map
@@ -86,7 +122,15 @@ public class Play extends GameState {
         tmr.render();
         sb.setProjectionMatrix(cam.combined);
         player.render(sb);
-        b2dr.render(world,b2dCam.combined);
+
+        //render points
+        for(int i=0; i < points.size;i++){
+            points.get(i).render(sb);
+        }
+
+        if(debug){
+            b2dr.render(world,b2dCam.combined);
+        }
     }
 
     public void dispose(){
@@ -114,9 +158,9 @@ public class Play extends GameState {
         cs.setRadius(7f/B2DVars.PPM);
 
         fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
-        fdef.filter.maskBits = B2DVars.BIT_GROUND;
+        fdef.filter.maskBits = B2DVars.BIT_GROUND | B2DVars.BIT_POINT;
         fdef.shape = cs;
-        fdef.restitution = 0.7f;
+//        fdef.restitution = 0.7f;
         body.createFixture(fdef).setUserData("Player");
 
         // create sensor
@@ -160,6 +204,33 @@ public class Play extends GameState {
                     world.createBody(bdef).createFixture(fdef);
                 }
             }
+        }
+    }
+
+    private void createPoints(){
+        points = new Array<Point>();
+        MapLayer layer = tiledMap.getLayers().get("items");
+
+        BodyDef bdef = new BodyDef();
+        FixtureDef fdef = new FixtureDef();
+
+        for(MapObject mo : layer.getObjects()){
+            bdef.type = BodyType.StaticBody;
+            float x = ((Float)mo.getProperties().get("x"))/B2DVars.PPM;
+            float y = ((Float)mo.getProperties().get("y"))/B2DVars.PPM;
+            bdef.position.set(x,y);
+            CircleShape cshape = new CircleShape();
+            cshape.setRadius(8/B2DVars.PPM);
+            fdef.shape = cshape;
+            fdef.isSensor = true;
+            fdef.filter.categoryBits = B2DVars.BIT_POINT;
+            fdef.filter.maskBits = B2DVars.BIT_PLAYER;
+            Body body = world.createBody(bdef);
+            body.createFixture(fdef).setUserData("point");
+            Point p = new Point(body);
+            points.add(p);
+
+            body.setUserData(p);
         }
     }
 }

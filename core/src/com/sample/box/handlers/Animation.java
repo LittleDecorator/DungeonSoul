@@ -40,11 +40,15 @@ public class Animation {
 
     private void step(){
         time -=delay;
+//        all
         currentFrame++;
         if(currentFrame == frames.length){
             currentFrame = 0;
             timesPlayed++;
         }
+//        first
+            /*currentFrame = 0;
+            timesPlayed++;*/
     }
 
     public TextureRegion getFrame(){return frames[currentFrame];}

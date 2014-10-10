@@ -12,9 +12,9 @@ public class Player extends B2DSprite {
 
     public Player(Body body) {
         super(body);
-        Texture tex = Game.res.getTexture("ball");
-        TextureRegion[] sprites = TextureRegion.split(tex,16,16)[0];
-        setAnimation(sprites, 1 / 12f);
+        Texture tex = Game.res.getTexture("player");
+        TextureRegion[] sprites = TextureRegion.split(tex,32,30)[0];
+        setAnimation(sprites, 1.5f / 12f);
     }
 
     public int getNumCrystals() { return numCrystals; }

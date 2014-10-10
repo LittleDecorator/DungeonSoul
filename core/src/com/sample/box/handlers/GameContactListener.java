@@ -1,10 +1,14 @@
 package com.sample.box.handlers;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.utils.Array;
+import com.sample.box.entities.Point;
 
 public class GameContactListener implements ContactListener {
 
     private int numFootContacts;
+    private Array<Body> bodiesToRemove = new Array<Body>();
 
     // called when two fixtures start to collide
     public void beginContact(Contact c){
@@ -16,6 +20,14 @@ public class GameContactListener implements ContactListener {
         }
         if(fb.getUserData()!=null && fb.getUserData().equals("Foot")){
             numFootContacts++;
+        }
+
+        //remove point
+        if(fa.getUserData()!=null && fa.getUserData().equals("point")){
+            bodiesToRemove.add(fa.getBody());
+        }
+        if(fb.getUserData()!=null && fb.getUserData().equals("point")){
+            bodiesToRemove.add(fb.getBody());
         }
     }
 
@@ -46,5 +58,7 @@ public class GameContactListener implements ContactListener {
 
     }
 
-
+    public Array<Body> getBodiesToRemove() {
+        return bodiesToRemove;
+    }
 }
