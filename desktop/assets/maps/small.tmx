@@ -1,48 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="40" height="30" tilewidth="8" tileheight="8">
+<map version="1.0" orientation="orthogonal" width="300" height="90" tilewidth="8" tileheight="8">
  <tileset firstgid="1" name="tiles" tilewidth="8" tileheight="8">
   <image source="tiles.png" width="560" height="640"/>
  </tileset>
  <tileset firstgid="5601" name="items" tilewidth="16" tileheight="16">
   <image source="../img/green_light.png" width="16" height="16"/>
  </tileset>
- <layer name="floor" width="40" height="30">
-  <data encoding="base64" compression="zlib">
-   eJztzrEJACAQBEEj+6/PakxFI7lAeWZg820NAGoa/fXBaX3yd89fxl/GX8Zfxl/GX2b/+zHqm/9zO4E=
-  </data>
- </layer>
- <objectgroup name="items" width="40" height="30">
-  <object gid="5601" x="68" y="165"/>
-  <object gid="5601" x="233" y="196"/>
-  <object gid="5601" x="259" y="137"/>
-  <object gid="5601" x="180" y="118"/>
-  <object gid="5601" x="112" y="114"/>
-  <object gid="5601" x="201" y="165"/>
-  <object gid="5601" x="274" y="179"/>
-  <object gid="5601" x="28" y="111"/>
-  <object x="152" y="150" width="8" height="8">
+ <objectgroup name="floor" width="300" height="90">
+  <object name="ground" x="0" y="640" width="2400">
+   <properties>
+    <property name="height" value="1"/>
+    <property name="width" value="300"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="items" width="300" height="90" visible="0">
+  <object gid="5601" x="68" y="565"/>
+  <object gid="5601" x="233" y="596"/>
+  <object gid="5601" x="259" y="537"/>
+  <object gid="5601" x="180" y="518"/>
+  <object gid="5601" x="112" y="514"/>
+  <object gid="5601" x="201" y="565"/>
+  <object gid="5601" x="274" y="579"/>
+  <object gid="5601" x="28" y="511"/>
+  <object x="152" y="550" width="8" height="8">
    <ellipse/>
   </object>
-  <object x="229" y="112" width="8" height="8">
+  <object x="229" y="512" width="8" height="8">
    <ellipse/>
   </object>
-  <object x="79" y="114" width="8" height="8">
+  <object x="79" y="514" width="8" height="8">
    <ellipse/>
   </object>
-  <object x="61" y="53" width="8" height="8">
+  <object x="61" y="453" width="8" height="8">
    <ellipse/>
   </object>
-  <object x="148" y="81" width="8" height="8">
+  <object x="148" y="481" width="8" height="8">
    <ellipse/>
   </object>
-  <object x="262" y="68" width="9" height="9">
+  <object x="262" y="468" width="9" height="9">
    <ellipse/>
   </object>
-  <object x="41" y="191" width="8" height="8">
+  <object x="41" y="591" width="8" height="8">
    <ellipse/>
   </object>
-  <object x="110" y="196" width="8" height="8">
+  <object x="110" y="596" width="8" height="8">
    <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="wall" width="300" height="90">
+  <object name="right" x="2400" y="8" height="640">
+   <properties>
+    <property name="height" value="80"/>
+    <property name="width" value="0"/>
+   </properties>
+  </object>
+  <object name="left" x="0" y="8" height="640">
+   <properties>
+    <property name="height" value="80"/>
+    <property name="width" value="0"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

@@ -8,6 +8,6 @@ public class B2DVars {
     // category bit-s
     public static final short BIT_GROUND = 2;
     public static final short BIT_PLAYER = 4;
-    public static final short BIT_WALL = 2;
+    public static final short BIT_WALL = 6;
     public static final short BIT_POINT = 8;
 }
