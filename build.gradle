@@ -1,7 +1,7 @@
 buildscript {
     repositories {
-        mavenCentral()
         mavenLocal()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.10+'
@@ -14,7 +14,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = 'Box'
+        appName = 'AntVenture'
         gdxVersion = '1.2.0'
         roboVMVersion = '0.0.13'
     }
