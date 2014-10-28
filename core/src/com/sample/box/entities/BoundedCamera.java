@@ -2,6 +2,11 @@ package com.sample.box.entities;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
+/*
+* extend standart camera
+* allow set boundary of viewport
+* easy change camera position on update
+* */
 public class BoundedCamera extends OrthographicCamera{
 
     private float xmin;

@@ -16,6 +16,7 @@ public class Content {
     public void loadTexture(String path, String key){
         Texture tex = new Texture(Gdx.files.internal(path));
         textures.put(key,tex);
+        System.out.println("tex map size = "+textures.size());
     }
 
     public Texture getTexture(String key){

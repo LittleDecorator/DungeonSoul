@@ -1,51 +1,51 @@
 package com.sample.box.handlers;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sample.box.Game;
 import com.sample.box.state.GameState;
 import com.sample.box.state.Play;
 
 import java.util.Stack;
-
+/*
+* must be simple state manager, nothing provide
+* */
 public class GameStateManager {
 
-    private Game game;
-    private Stack<GameState> gameStates;
-    public final static int PLAY = 912837;
+    private Stack<GameState> gameStates;            //stack of game states
+    public final static int PLAY = 912837;          //don't know why we need this
 
-    public GameStateManager(Game game) {
-        this.game = game;
+    public GameStateManager() {
         gameStates = new Stack<GameState>();
         pushState(PLAY);
     }
 
-    public void update(float dt){
-        gameStates.peek().update(dt);
+    //get current game state update by delta and render
+    public void updateAndRender(float dt){
+        GameState curr = gameStates.peek();
+        curr.update(dt);
+        curr.render();
     }
 
-    public void render(){
-        gameStates.peek().render();
-    }
-
-    public Game game() {
-        return game;
-    }
-
+    //return play state
     private GameState getState(int state){
-        if(state == PLAY) return new Play(this);
+        if(state == PLAY) return new Play();
         return null;
     }
 
+    //set new state to stack
     public void setState(int state){
         popState();
         pushState(state);
     }
 
-    public void popState(){
+    //i think remove state
+    private void popState(){
         GameState state = gameStates.pop();
         state.dispose();
     }
 
-    public void pushState(int state){
+    //add state
+    private void pushState(int state){
         gameStates.push(getState(state));
     }
 

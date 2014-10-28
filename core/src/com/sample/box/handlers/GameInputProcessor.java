@@ -3,19 +3,18 @@ package com.sample.box.handlers;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
-import com.sample.box.entities.B2DSprite;
+import com.sample.box.character.Character;
+
 import static com.sample.box.utils.Console.log;
 
 public class GameInputProcessor extends InputAdapter{
 
-    private B2DSprite body;
+    private Character body;
     private Vector2 velocity;
     private GameContactListener gcl;
     private boolean flag;
-    private static final float JUMP_FORCE = 200;
+    private static final float JUMP_FORCE = 250;
     private static final float MOVE_SPEED = 40;
-
-    //need monitor what key pressed and released
 
     @Override
     public boolean keyDown(int k) {
@@ -63,7 +62,7 @@ public class GameInputProcessor extends InputAdapter{
         return true;
     }
 
-    public void setBody(B2DSprite body) {
+    public void setBody(Character body) {
         this.body = body;
         this.velocity = body.getBody().getLinearVelocity().cpy();
     }

@@ -18,27 +18,27 @@ public class GameContactListener implements ContactListener {
     public void beginContact(Contact c){
         Fixture fa = c.getFixtureA();
         Fixture fb = c.getFixtureB();
-
-        dataBuff = (String) (fa.getUserData()!=null? fa.getUserData() : fb.getUserData());
-
-        if(dataBuff.equals("footSensor")){
+//        log("fa -> "+fa.getUserData());
+//        log("fb -> "+ fb.getUserData());
+        dataBuff =(String)fa.getUserData()+fb.getUserData();
+        if(dataBuff.contains("footSensor")){
             footContact++;
         }
 
         //remove point
-        if(dataBuff.equals("point")){
-            bodiesToRemove.add(fa.getBody());
+        if(dataBuff.contains("point")){
+            bodiesToRemove.add(fb.getBody());
         }
 
         //left collide with walls
-        if(dataBuff.equals("leftSensor")){
+        if(dataBuff.contains("leftSensor")){
             //if A key was pressed, then skip key release
             GameInput.mark4skip(GameInput.LEFT);
             leftWallContact++;
         }
 
         //right collide with wall
-        if(dataBuff.equals("rightSensor")){
+        if(dataBuff.contains("rightSensor")){
             //if D key was pressed, then skip key release
             GameInput.mark4skip(GameInput.RIGHT);
             rightWallContact++;
@@ -60,17 +60,17 @@ public class GameContactListener implements ContactListener {
         Fixture fa = c.getFixtureA();
         Fixture fb = c.getFixtureB();
 
-        dataBuff = (String) (fa.getUserData()!=null? fa.getUserData() : fb.getUserData());
+        dataBuff = (String)fa.getUserData()+fb.getUserData();
 
-        if(dataBuff.equals("footSensor")){
+        if(dataBuff.contains("footSensor")){
             footContact--;
         }
 
-        if(dataBuff.equals("leftSensor")){
+        if(dataBuff.contains("leftSensor")){
             leftWallContact--;
         }
 
-        if(dataBuff.equals("rightSensor")){
+        if(dataBuff.contains("rightSensor")){
             rightWallContact--;
         }
     }

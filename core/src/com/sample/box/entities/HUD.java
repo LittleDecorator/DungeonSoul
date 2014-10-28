@@ -1,3 +1,4 @@
+/*
 package com.sample.box.entities;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,3 +12,4 @@ public class HUD {
         this.player = player;
     }
 }
+*/
