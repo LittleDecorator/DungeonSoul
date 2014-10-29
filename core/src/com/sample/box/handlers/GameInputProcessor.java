@@ -32,6 +32,14 @@ public class GameInputProcessor extends InputAdapter{
             flag = true;
             GameInput.setKey(GameInput.LEFT,true);
         }
+        if(k== Input.Keys.F){
+            if(body.flameIsOn()){
+                body.flameOff();
+            } else {
+                body.flameOn();
+            }
+            flag = true;
+        }
         if(flag){
             body.getBody().applyForceToCenter(velocity,true);
             resetVelocity();

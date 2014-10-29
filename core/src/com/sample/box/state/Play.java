@@ -21,7 +21,7 @@ import com.sample.box.handlers.*;
 import com.sample.box.helpers.GameHelper;
 import com.sample.box.helpers.InfoHelper;
 import com.sample.box.helpers.LevelHelper;
-
+import com.sample.box.helpers.StateHelper;
 
 import static com.sample.box.utils.Console.log;
 
@@ -42,7 +42,7 @@ public class Play extends GameState {
 
     private boolean debug = true;               //debug flag
 
-    private RayHandler light;         //light
+    private RayHandler light,flame;         //light
 
     private Character player;
 
@@ -90,9 +90,18 @@ public class Play extends GameState {
         // draw player
         player.render(sb);
 
-        //draw light point
-        light.setCombinedMatrix(b2dCam.combined);
-        light.updateAndRender();
+
+
+        //draw flame
+        if(player.flameIsOn()) {
+            flame = player.getFlame();
+            flame.setCombinedMatrix(b2dCam.combined);
+            flame.updateAndRender();
+        } else {
+            //draw light point
+            light.setCombinedMatrix(b2dCam.combined);
+            light.updateAndRender();
+        }
 
         //show box2d objects
         if(debug){
@@ -105,18 +114,13 @@ public class Play extends GameState {
         InfoHelper.getInfo().render(sb);
     }
 
-/*    private void updateInfo(){
-        info.setPlayerInfo("fps = " + Gdx.graphics.getFramesPerSecond()+"; is on ground = "+cl.isPlayerOnGround());
-        info.setPlayerPos("x pos = "+ player.getBody().getPosition().x + "; y pos =  "+ player.getBody().getPosition().y);
-        info.setPlayerForces("x vel = "+ player.getBody().getLinearVelocity().x + "; y vel = "+player.getBody().getLinearVelocity().y);
-    }*/
-
     public void dispose(){}
 
     private void initWorld(){
         world = new World(new Vector2(0,-9.81f), true);
         world.setContactListener(game.getGcl());
         b2dr = new Box2DDebugRenderer();
+        StateHelper.setWorld(world);                            //save world ref in state helper
     }
 
     //crate background

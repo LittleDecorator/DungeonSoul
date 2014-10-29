@@ -12,8 +12,11 @@ public interface Character{
     public void collectCrystals();
     public void setTotalCrystals(int i);
     public int getTotalCrystals();
-    public void flameOn(RayHandler handler);
-    public void flameOff(RayHandler handler);
+
+    public void flameOn();
+    public boolean flameIsOn();
+    public void flameOff();
+    public RayHandler getFlame();
 
     public void update(float dt);
     public void render(SpriteBatch sb);
