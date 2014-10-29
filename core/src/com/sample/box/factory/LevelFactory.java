@@ -9,13 +9,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.sample.box.Game;
-import com.sample.box.entities.MapInfo;
-import com.sample.box.entities.Maps;
-import com.sample.box.entities.Point;
-import com.sample.box.entities.Sprites;
+import com.sample.box.entities.*;
 import com.sample.box.handlers.B2DVars;
 import com.sample.box.handlers.Content;
 import com.sample.box.helpers.GameHelper;
+import com.sample.box.helpers.InfoHelper;
 import com.sample.box.helpers.LevelHelper;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
@@ -74,7 +72,6 @@ public class LevelFactory {
 
         //render platforms
         MapLayer platform = map.getLayers().get("platforms");
-
         for(MapObject mo : platform.getObjects()){
             bdef.type = BodyDef.BodyType.StaticBody;                        //make it static
             float x = ((Float)mo.getProperties().get("x"))/PPM;         //get x coordinate
@@ -90,30 +87,29 @@ public class LevelFactory {
         }
 
         //create collectables items
-        CircleShape cshape = new CircleShape();                             //set body shape
         points = new Array<Point>();                                //init array
-        MapLayer layer = map.getLayers().get("points");         //get specific layer
+        MapLayer player = map.getLayers().get("points");         //get specific layer
         GameHelper.getGame().getResource().loadTexture(Sprites.POINTS,"point");     //load point texture
+        CircleShape cshape = new CircleShape();                             //set body shape
         //for each object in layer
-        for(MapObject mo : layer.getObjects()){
-            BodyDef cdef = new BodyDef();
-            cdef.type = BodyType.StaticBody;                        //make it static
+        for(MapObject mo : player.getObjects()){
+            bdef.type = BodyType.StaticBody;                        //make it static
             float x = ((Float)mo.getProperties().get("x"))/PPM;         //get x coordinate
             float y = ((Float)mo.getProperties().get("y"))/PPM;         //get y coordinate
             log("crystal body x = "+x + " ; y = "+ y);
-            cdef.position.set(x,y);                                             //set body position in world
-            Body body = world.createBody(cdef);                     //create body
-            FixtureDef cfdef = new FixtureDef();
+            bdef.position.set(x,y);                                             //set body position in world
+            Body body = world.createBody(bdef);                     //create body
             cshape.setRadius(0.04f);                                    //radius
-            cfdef.shape = cshape;                                                //set shape to fixture
-            cfdef.isSensor = true;                                   //set fixture as sensor
-            cfdef.filter.categoryBits = B2DVars.BIT_POINT;           //def filter
-            cfdef.filter.maskBits = B2DVars.BIT_PLAYER;              //def maskBits
-            body.createFixture(cfdef).setUserData("point");          //add user data to fixture, as marker
+            fdef.shape = cshape;                                                //set shape to fixture
+            fdef.isSensor = true;                                   //set fixture as sensor
+            fdef.filter.categoryBits = B2DVars.BIT_POINT;           //def filter
+            fdef.filter.maskBits = B2DVars.BIT_PLAYER;              //def maskBits
+            body.createFixture(fdef).setUserData("point");          //add user data to fixture, as marker
             Point p = new Point(body);                              //create new object from body
             body.setUserData(p);                                    //link object with body
             points.add(p);                                          // add object to array
         }
+        cshape.dispose();
     }
 
     public static OrthogonalTiledMapRenderer buildEntrance(World world){

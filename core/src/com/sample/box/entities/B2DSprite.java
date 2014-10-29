@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.sample.box.handlers.Animation;
-import com.sample.box.handlers.B2DVars;
+
+import static  com.sample.box.handlers.B2DVars.PPM;
+import static com.sample.box.utils.Console.log;
 
 public class B2DSprite {
 
@@ -35,7 +37,7 @@ public class B2DSprite {
 
     public void render(SpriteBatch sb){
         sb.begin();
-        sb.draw(animation.getFrame(), body.getPosition().x /** B2DVars.PPM - width/2*/, body.getPosition().y/* * B2DVars.PPM - height/2*/);
+        sb.draw(animation.getFrame(), body.getPosition().x * PPM - width/2, body.getPosition().y * PPM - height/2);
         sb.end();
     }
 

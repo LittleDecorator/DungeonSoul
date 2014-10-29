@@ -1,66 +1,49 @@
-/*
 package com.sample.box.entities;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import static com.sample.box.utils.Console.log;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+/* contain info about objects, fps */
 public class Info {
 
-    private Player player;
-
-    private TextureRegion[] font;
     BitmapFont bitmapFontInfo;
 
-    private String playerInfo;
-    private String playerPos;
-    private String playerForces;
+    List<DisplayElement> listInfo = new ArrayList<DisplayElement>();
 
-    public Info(Player player) {
-        this.player = player;
-
-//        font = new TextureRegion[11];
+    public Info() {
         bitmapFontInfo = new BitmapFont();
     }
 
-    public void render(SpriteBatch sb) {
+    /*public void update(Float dt){
 
+    }*/
+
+    public void render(SpriteBatch sb) {
         sb.begin();
         // draw point amount
-//        drawString(sb, player.getNumCrystals() + " / " + player.getTotalCrystals(), 132, 211);
-        drawString(sb);
+        for(DisplayElement d : listInfo){
+            draw(sb, d);
+        }
         sb.end();
 
     }
 
-    private void drawString(SpriteBatch sb*/
-/*, String s, float x, float y*//*
-) {
-        */
-/*for(int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if(c == '/') c = 10;
-            else if(c >= '0' && c <= '9') c -= '0';
-            else continue;
-            sb.draw(font[c], x + i * 9, y);
-        }*//*
-
+    private void draw(SpriteBatch sb, DisplayElement d) {
         bitmapFontInfo.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        bitmapFontInfo.draw(sb, playerInfo ,15,400);
-        bitmapFontInfo.draw(sb, playerPos ,15,385);
-        bitmapFontInfo.draw(sb, playerForces ,15,370);
+//        bitmapFontInfo.draw(sb, d.getValue() ,d.getX(), d.getY());
+        bitmapFontInfo.draw(sb, "x= "+String.valueOf(d.getX()) + " ; y= "+String.valueOf(d.getY()) ,d.getX(), d.getY());
     }
 
-    public void setPlayerInfo(String playerInfo) {
-        this.playerInfo = playerInfo;
+    public void storeElement(DisplayElement d){
+        log("store element with pos x");
+        listInfo.add(d);
     }
 
-    public void setPlayerPos(String playerPos) {
-        this.playerPos = playerPos;
-    }
 
-    public void setPlayerForces(String playerForces) {
-        this.playerForces = playerForces;
-    }
+
 }
-*/

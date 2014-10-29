@@ -19,6 +19,7 @@ import com.sample.box.factory.LevelFactory;
 import com.sample.box.factory.PlayerFactory;
 import com.sample.box.handlers.*;
 import com.sample.box.helpers.GameHelper;
+import com.sample.box.helpers.InfoHelper;
 import com.sample.box.helpers.LevelHelper;
 
 
@@ -76,17 +77,17 @@ public class Play extends GameState {
             backgrounds[i].render(sb);
         }
 
-        // draw crystals
-        for(int i = 0; i < mapInfo.getPoints().size; i++) {
-            mapInfo.getPoints().get(i).render(sb);
-        }
-
         // draw tilemap
         tmr.setView(bCam);
         tmr.render();
 
-        // draw player
+        //link batch with camera
         sb.setProjectionMatrix(bCam.combined);
+        // draw crystals
+        for(int i = 0; i < mapInfo.getPoints().size; i++) {
+            mapInfo.getPoints().get(i).render(sb);
+        }
+        // draw player
         player.render(sb);
 
         //draw light point
@@ -99,6 +100,9 @@ public class Play extends GameState {
             b2dCam.update();
             b2dr.render(world,b2dCam.combined);
         }
+
+        //draw point info
+        InfoHelper.getInfo().render(sb);
     }
 
 /*    private void updateInfo(){

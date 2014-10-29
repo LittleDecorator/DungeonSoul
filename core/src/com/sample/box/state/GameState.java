@@ -4,8 +4,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.sample.box.Game;
 import com.sample.box.entities.BoundedCamera;
+import com.sample.box.entities.Info;
 import com.sample.box.handlers.GameStateManager;
 import com.sample.box.helpers.GameHelper;
+import com.sample.box.helpers.InfoHelper;
 
 /* some strange class
 * bidirectional ref to manager????? WTF???
@@ -20,12 +22,12 @@ public abstract class GameState {
     protected BoundedCamera bCam;
     protected OrthographicCamera oCam;
 
-
     protected GameState(){
         game = GameHelper.getGame();
         sb = new SpriteBatch();
         bCam = game.getbCam();
         oCam = game.getoCam();
+        InfoHelper.setInfo(new Info());                 //create info instance
     }
 
     public abstract void update(float dt);
