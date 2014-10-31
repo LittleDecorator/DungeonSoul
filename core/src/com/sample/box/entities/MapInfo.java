@@ -10,6 +10,7 @@ public class MapInfo {
     float tileSize;
     Texture background;           //background
     Array<Point> points;
+    Barrel barrel;
 
     public int getTileMapWidth() {
         return tileMapWidth;
@@ -49,5 +50,13 @@ public class MapInfo {
 
     public void setPoints(Array<Point> points) {
         this.points = points;
+    }
+
+    public Barrel getBarrel() {
+        return barrel;
+    }
+
+    public void setBarrel(Barrel barrel) {
+        this.barrel = barrel;
     }
 }

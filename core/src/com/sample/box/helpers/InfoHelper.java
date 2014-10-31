@@ -13,4 +13,6 @@ public class InfoHelper {
     public static void setInfo(Info info) {
         InfoHelper.info = info;
     }
+
+
 }

@@ -2,8 +2,11 @@ package com.sample.box;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.sample.box.entities.BoundedCamera;
 //import com.sample.box.entities.Info;
 import com.sample.box.entities.Sprites;
@@ -13,13 +16,17 @@ import com.sample.box.handlers.GameInputProcessor;
 import com.sample.box.handlers.GameStateManager;
 import com.sample.box.helpers.GameHelper;
 
+import java.util.Random;
+
 import static com.sample.box.handlers.B2DVars.PPM;
 
 import static com.sample.box.utils.Console.log;
 
 /*
 * must provide contact and input handlers, camera and manager
-* */
+*
+*/
+
 public class Game implements ApplicationListener {
 
     public static final String TITLE = "Flaming Fist";
@@ -28,6 +35,7 @@ public class Game implements ApplicationListener {
     public static final int SCALE =2;
 
     public static final float STEP = 1/60f;
+    private boolean isPaused= false;
     private float accum;
 
     private BoundedCamera bCam;
@@ -37,6 +45,8 @@ public class Game implements ApplicationListener {
     private GameInputProcessor gip;
     private GameContactListener gcl;
     private Content resource;
+
+    public static ModelBatch modelBatch;
 //    private Info info;
 
     public void create(){
@@ -53,6 +63,8 @@ public class Game implements ApplicationListener {
     }
 
     public void render(){
+        /*Gdx.graphics.setTitle(TITLE + " -- FPS: " + Gdx.graphics.getFramesPerSecond());
+        gsm.updateAndRender(Gdx.graphics.getDeltaTime());*/
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         accum += Gdx.graphics.getDeltaTime();           //collect delta (think it something like fps)
         while(accum>=STEP){                             //if we can make step in world, then update manager and render
@@ -64,8 +76,12 @@ public class Game implements ApplicationListener {
     public void dispose(){}
 
     public void resize(int w, int h){}
-    public void pause(){}
-    public void resume(){}
+    public void pause(){
+        isPaused = true;
+    }
+    public void resume(){
+        isPaused = false;
+    }
 
     public GameInputProcessor getGip() {
         return gip;
@@ -89,6 +105,10 @@ public class Game implements ApplicationListener {
 
     public Content getResource() {
         return resource;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
     }
 }
 

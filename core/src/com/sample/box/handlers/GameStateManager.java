@@ -27,7 +27,7 @@ public class GameStateManager {
     }
 
     //return play state
-    private GameState getState(int state){
+    public GameState getState(int state){
         if(state == PLAY) return new Play();
         return null;
     }

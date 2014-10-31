@@ -11,6 +11,7 @@ public class GameContactListener implements ContactListener {
     private int footContact;
     private int leftWallContact;
     private int rightWallContact;
+    private int enemyContact;
     private Array<Body> bodiesToRemove = new Array<Body>();
     private String dataBuff;
 
@@ -18,8 +19,7 @@ public class GameContactListener implements ContactListener {
     public void beginContact(Contact c){
         Fixture fa = c.getFixtureA();
         Fixture fb = c.getFixtureB();
-//        log("fa -> "+fa.getUserData());
-//        log("fb -> "+ fb.getUserData());
+
         dataBuff =(String)fa.getUserData()+fb.getUserData();
         if(dataBuff.contains("footSensor")){
             footContact++;
@@ -43,6 +43,11 @@ public class GameContactListener implements ContactListener {
             GameInput.mark4skip(GameInput.RIGHT);
             rightWallContact++;
         }
+
+        //hit enemy short_range
+        if(dataBuff.contains("enemyRightSensor") || dataBuff.contains("enemyRightSensor")){
+            enemyContact++;
+        }
     }
 
     public boolean isPlayerOnGround(){
@@ -54,6 +59,10 @@ public class GameContactListener implements ContactListener {
     }
 
     public boolean isRightSideWall() { return rightWallContact>0; }
+
+    public boolean isPlayerCanHit(){
+        return enemyContact>0;
+    }
 
     // called when two fixtures end to collide
     public void endContact(Contact c){
@@ -72,6 +81,10 @@ public class GameContactListener implements ContactListener {
 
         if(dataBuff.contains("rightSensor")){
             rightWallContact--;
+        }
+
+        if(dataBuff.contains("enemyRightSensor") || dataBuff.contains("enemyRightSensor")){
+            enemyContact--;
         }
     }
 

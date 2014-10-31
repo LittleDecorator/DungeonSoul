@@ -16,6 +16,7 @@ import com.sample.box.helpers.GameHelper;
 import com.sample.box.helpers.InfoHelper;
 import com.sample.box.helpers.LevelHelper;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.sample.box.helpers.ObjectHelper;
 
 import static com.sample.box.handlers.B2DVars.PPM;
 import static com.sample.box.utils.Console.log;
@@ -23,6 +24,7 @@ import static com.sample.box.utils.Console.log;
 public class LevelFactory {
 
     private static Array<Point> points = new Array<Point>();
+    private static Barrel barrel;
 
     private static void renderMap(World world,  TiledMap map){
         BodyDef bdef = new BodyDef();                               //create body
@@ -110,6 +112,20 @@ public class LevelFactory {
             points.add(p);                                          // add object to array
         }
         cshape.dispose();
+
+        //create barrel
+        bdef.type = BodyDef.BodyType.StaticBody;                        //make it static
+        bdef.position.set(5f,.235f);
+        Body body = world.createBody(bdef);                     //create body
+        pshape.setAsBox(0.13f, 0.13f);
+        fdef.shape = pshape;                                                //set shape to fixture
+        fdef.friction = 0;
+        fdef.filter.categoryBits = B2DVars.BIT_DESTROYABLE | B2DVars.BIT_CONTAINER;           //def filter
+        fdef.filter.maskBits = B2DVars.BIT_PLAYER;              //def maskBits
+        body.createFixture(fdef).setUserData("barrel");          //add user data to fixture, as marker
+        GameHelper.getGame().getResource().loadTexture(Sprites.BARREL,"barrel");     //load point texture
+        barrel = new Barrel(body);
+        ObjectHelper.addObject("barrel",barrel);
     }
 
     public static OrthogonalTiledMapRenderer buildEntrance(World world){
@@ -126,6 +142,7 @@ public class LevelFactory {
         content.loadTexture(Sprites.SURFACE_BACKGROUND,"background");
         info.setBackground(content.getTexture("background"));
         info.setPoints(points);
+        info.setBarrel(barrel);
         LevelHelper.setMapInfo(info);
 
         return new OrthogonalTiledMapRenderer(tiledMap);

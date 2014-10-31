@@ -40,7 +40,6 @@ public class Info {
     }
 
     public void storeElement(DisplayElement d){
-        log("store element with pos x");
         listInfo.add(d);
     }
 

@@ -18,10 +18,8 @@ import com.sample.box.entities.*;
 import com.sample.box.factory.LevelFactory;
 import com.sample.box.factory.PlayerFactory;
 import com.sample.box.handlers.*;
-import com.sample.box.helpers.GameHelper;
-import com.sample.box.helpers.InfoHelper;
-import com.sample.box.helpers.LevelHelper;
-import com.sample.box.helpers.StateHelper;
+import com.sample.box.helpers.*;
+import com.sample.box.ui.stage.InventoryScreen;
 
 import static com.sample.box.utils.Console.log;
 
@@ -56,13 +54,16 @@ public class Play extends GameState {
 
     //update world via step
     public void update(float dt){
-        world.step(dt,6,2);                 //make step
-        bCam.update();
-        collectPoint();
-        player.update(dt);                  // update player
-        // update crystals
-        for(int i = 0; i < mapInfo.getPoints().size; i++) {
-            mapInfo.getPoints().get(i).update(dt);
+        if(!GameHelper.getGame().isPaused()){
+            world.step(dt,6,2);                 //make step
+            bCam.update();
+            collectPoint();
+            player.update(dt);                  // update player
+            // update crystals
+            for(int i = 0; i < mapInfo.getPoints().size; i++) {
+                mapInfo.getPoints().get(i).update(dt);
+            }
+            mapInfo.getBarrel().update(dt);
         }
     }
 
@@ -90,8 +91,6 @@ public class Play extends GameState {
         // draw player
         player.render(sb);
 
-
-
         //draw flame
         if(player.flameIsOn()) {
             flame = player.getFlame();
@@ -111,7 +110,11 @@ public class Play extends GameState {
         }
 
         //draw point info
-        InfoHelper.getInfo().render(sb);
+//        InfoHelper.getInfo().render(sb);
+        GameInputProcessor.drawVelInfo(sb);
+
+        mapInfo.getBarrel().render(sb);
+        ScreenHelper.getInventory().render(Gdx.graphics.getDeltaTime());
     }
 
     public void dispose(){}
@@ -121,6 +124,8 @@ public class Play extends GameState {
         world.setContactListener(game.getGcl());
         b2dr = new Box2DDebugRenderer();
         StateHelper.setWorld(world);                            //save world ref in state helper
+        ScreenHelper.setInventory(new InventoryScreen());
+
     }
 
     //crate background
@@ -145,7 +150,7 @@ public class Play extends GameState {
     private void initMap(){
         tmr = LevelFactory.buildEntrance(world);        //render map
         light = new RayHandler(world);                            //add light
-        new PointLight(light, 64, new Color(1,1,1,1), 8f, 5f, 4f);      //create light point
+        new PointLight(light, 8, new Color(1,1,1,1), 8f, 5f, 4f);      //create light point
         light.setShadows(false);                        //disaple shadows
         mapInfo = LevelHelper.getGetMapInfo();          //get map info
 

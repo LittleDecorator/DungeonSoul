@@ -23,7 +23,8 @@ public class PlayerFactory {
         //create player body
         Body body = build(world);
         //link resource
-        GameHelper.getGame().getResource().loadTexture(Sprites.WARRIOR,"Player");
+//        GameHelper.getGame().getResource().loadTexture(Sprites.TEST,"player");
+        GameHelper.getGame().getResource().loadTexture(Sprites.WARRIOR,"player");
         Warrior warrior = new Warrior(body);
         body.setUserData(warrior);
         return warrior;
@@ -44,12 +45,12 @@ public class PlayerFactory {
         //player body
         ps.setAsBox(8/PPM,12/PPM,new Vector2(-2/PPM,0),0);
         fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
-        fdef.filter.maskBits = B2DVars.BIT_GROUND | B2DVars.BIT_POINT | B2DVars.BIT_WALL;
+        fdef.filter.maskBits = B2DVars.BIT_GROUND | B2DVars.BIT_POINT | B2DVars.BIT_WALL | B2DVars.BIT_DESTROYABLE | B2DVars.BIT_CONTAINER;
         fdef.shape = ps;
         body.createFixture(fdef).setUserData("player");
 
         // create foot sensor
-        ps.setAsBox(8/PPM,3/PPM,new Vector2(-2/PPM,-12/PPM),0);
+        ps.setAsBox(8/PPM,1/PPM,new Vector2(-2/PPM,-13/PPM),0);
         fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
         fdef.filter.maskBits = B2DVars.BIT_GROUND;
         fdef.shape = ps;
@@ -57,7 +58,7 @@ public class PlayerFactory {
         body.createFixture(fdef).setUserData("footSensor");
 
         // create left side sensor
-        ps.setAsBox(4/PPM,10/PPM,new Vector2(-10/PPM,0),0);
+        ps.setAsBox(2/PPM,10/PPM,new Vector2(-12/PPM,0),0);
         fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
         fdef.filter.maskBits = B2DVars.BIT_WALL | B2DVars.BIT_GROUND;
         fdef.shape = ps;
@@ -65,12 +66,31 @@ public class PlayerFactory {
         body.createFixture(fdef).setUserData("leftSensor");
 
         //create right side sensor
-        ps.setAsBox(4/PPM,10/PPM,new Vector2(6/PPM,0),0);
+        ps.setAsBox(2/PPM,10/PPM,new Vector2(8/PPM,0),0);
         fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
         fdef.filter.maskBits = B2DVars.BIT_WALL | B2DVars.BIT_GROUND;
         fdef.shape = ps;
         fdef.isSensor = true;
         body.createFixture(fdef).setUserData("rightSensor");
+
+        //create right hit range sensor
+        ps.setAsBox(4/PPM,10/PPM,new Vector2(10/PPM,0),0);
+        fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
+        fdef.filter.maskBits = B2DVars.BIT_DESTROYABLE;
+        fdef.shape = ps;
+        fdef.isSensor = true;
+        body.createFixture(fdef).setUserData("enemyRightSensor");
+
+        // create left hit range sensor
+        ps.setAsBox(4/PPM,10/PPM,new Vector2(-14/PPM,0),0);
+        fdef.filter.categoryBits = B2DVars.BIT_PLAYER;
+        fdef.filter.maskBits = B2DVars.BIT_DESTROYABLE;
+        fdef.shape = ps;
+        fdef.isSensor = true;
+        body.createFixture(fdef).setUserData("enemyLeftSensor");
+
+        ps.dispose();
+
         return body;
     }
 
