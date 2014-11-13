@@ -4,14 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.sample.box.helpers.GameHelper;
-import com.sample.box.ui.Inventory;
-import com.sample.box.ui.actor.InventoryActor;
+import com.sample.box.ui.actor.MenuActor;
 
-public class InventoryScreen implements Screen {
+public class MenuScreen implements Screen {
 
-    private InventoryActor inventoryActor;
+    private MenuActor menuActor;
 
     public static Stage stage;
 
@@ -21,21 +19,14 @@ public class InventoryScreen implements Screen {
         // create the stage and make it receive all input
         stage = new Stage();
 
+        //get our skin
         Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
 
-        DragAndDrop dragAndDrop = new DragAndDrop();
-        inventoryActor = new InventoryActor(new Inventory(), dragAndDrop, skin);
-        stage.addActor(inventoryActor);
-    }
+        //create actor for screen
+        menuActor = new MenuActor(skin);
 
-    @Override
-    public void show() {
-        if(stage==null){
-            init();
-        }
-        Gdx.input.setInputProcessor(stage);
-        inventoryActor.setVisible(true);
-        setNeedRender(true);
+        //add actor to stage
+        stage.addActor(menuActor);
     }
 
     @Override
@@ -52,17 +43,23 @@ public class InventoryScreen implements Screen {
     }
 
     @Override
-    public void hide() {
-//        Gdx.input.setInputProcessor(null);
-        inventoryActor.setVisible(false);
-        Gdx.input.setInputProcessor(GameHelper.getGame().getGip());
-        setNeedRender(false);
-//        dispose();
+    public void show() {
+        if(stage==null){
+            init();
+        }
+        Gdx.input.setInputProcessor(stage);
+        menuActor.setVisible(true);
+        setNeedRender(true);
     }
 
     @Override
-    public void dispose() {
-        stage.dispose();
+    public void hide() {
+        //hide actor
+        menuActor.setVisible(false);
+        //set main input handler
+        Gdx.input.setInputProcessor(GameHelper.getGame().getGip());
+        //skip render
+        setNeedRender(false);
     }
 
     @Override
@@ -72,13 +69,15 @@ public class InventoryScreen implements Screen {
 
     @Override
     public void resume() {
+
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
     }
 
     public void setNeedRender(boolean needRender) {
         this.needRender = needRender;
-    }
-
-    public InventoryActor getInventoryActor() {
-        return inventoryActor;
     }
 }

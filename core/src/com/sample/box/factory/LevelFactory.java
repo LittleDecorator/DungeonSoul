@@ -73,7 +73,7 @@ public class LevelFactory {
         }
 
         //render platforms
-        MapLayer platform = map.getLayers().get("platforms");
+        /*MapLayer platform = map.getLayers().get("platforms");
         for(MapObject mo : platform.getObjects()){
             bdef.type = BodyDef.BodyType.StaticBody;                        //make it static
             float x = ((Float)mo.getProperties().get("x"))/PPM;         //get x coordinate
@@ -86,7 +86,7 @@ public class LevelFactory {
             fdef.filter.maskBits = B2DVars.BIT_PLAYER;              //def maskBits
             Body body = world.createBody(bdef);                     //create body
             body.createFixture(fdef).setUserData("platform");          //add user data to fixture, as marker
-        }
+        }*/
 
         //create collectables items
         points = new Array<Point>();                                //init array

@@ -6,10 +6,14 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.FrameBuffer;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.sample.box.Game;
@@ -20,6 +24,7 @@ import com.sample.box.factory.PlayerFactory;
 import com.sample.box.handlers.*;
 import com.sample.box.helpers.*;
 import com.sample.box.ui.stage.InventoryScreen;
+import com.sample.box.ui.stage.MenuScreen;
 
 import static com.sample.box.utils.Console.log;
 
@@ -96,6 +101,7 @@ public class Play extends GameState {
             flame = player.getFlame();
             flame.setCombinedMatrix(b2dCam.combined);
             flame.updateAndRender();
+            DrawTexture.drawTorch(sb,.5f*PPM,.25f*PPM);
         } else {
             //draw light point
             light.setCombinedMatrix(b2dCam.combined);
@@ -114,7 +120,8 @@ public class Play extends GameState {
         GameInputProcessor.drawVelInfo(sb);
 
         mapInfo.getBarrel().render(sb);
-        ScreenHelper.getInventory().render(Gdx.graphics.getDeltaTime());
+        ScreenHelper.getInventory().render(Gdx.graphics.getDeltaTime());        //render inventory content
+        ScreenHelper.getMenu().render(Gdx.graphics.getDeltaTime());             //render menu modal
     }
 
     public void dispose(){}
@@ -124,8 +131,8 @@ public class Play extends GameState {
         world.setContactListener(game.getGcl());
         b2dr = new Box2DDebugRenderer();
         StateHelper.setWorld(world);                            //save world ref in state helper
-        ScreenHelper.setInventory(new InventoryScreen());
-
+        ScreenHelper.setInventory(new InventoryScreen());       //init inventory screen
+        ScreenHelper.setMenu(new MenuScreen());                 //init menu screen
     }
 
     //crate background
@@ -149,12 +156,12 @@ public class Play extends GameState {
 
     private void initMap(){
         tmr = LevelFactory.buildEntrance(world);        //render map
-        light = new RayHandler(world);                            //add light
-        new PointLight(light, 8, new Color(1,1,1,1), 8f, 5f, 4f);      //create light point
-        light.setShadows(false);                        //disaple shadows
         mapInfo = LevelHelper.getGetMapInfo();          //get map info
-
         createBackground();
+
+        light = new RayHandler(world);                            //add light
+        new PointLight(light, 10000, new Color(1,1,1,1), 3f, 5f, 4f).setXray(true);      //create light point
+        light.setShadows(false);                        //disaple shadows
         setCam();
     }
 

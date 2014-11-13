@@ -10,10 +10,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.sample.box.entities.BoundedCamera;
 //import com.sample.box.entities.Info;
 import com.sample.box.entities.Sprites;
-import com.sample.box.handlers.Content;
-import com.sample.box.handlers.GameContactListener;
-import com.sample.box.handlers.GameInputProcessor;
-import com.sample.box.handlers.GameStateManager;
+import com.sample.box.handlers.*;
 import com.sample.box.helpers.GameHelper;
 
 import java.util.Random;
@@ -46,7 +43,7 @@ public class Game implements ApplicationListener {
     private GameContactListener gcl;
     private Content resource;
 
-    public static ModelBatch modelBatch;
+    public static SaveManager saveManager;
 //    private Info info;
 
     public void create(){
@@ -59,7 +56,7 @@ public class Game implements ApplicationListener {
         oCam.setToOrtho(false, Game.V_WIDTH, Game.V_HEIGHT);
         GameHelper.setGame(this); //create ref via helper
         gsm = new GameStateManager();  //managing game state(views)
-
+        saveManager = new SaveManager(false);
     }
 
     public void render(){

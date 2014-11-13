@@ -61,6 +61,10 @@ public class GameInputProcessor extends InputAdapter{
             }
             flag = true;
         }
+        //show menu
+        if(k== Input.Keys.ESCAPE){
+            ScreenHelper.getMenu().show();
+        }
         if(k == Input.Keys.I){
 //            log(GameInput.getKey(GameInput.INVENTORY)?"TRUE":"FALSE");
 //            if(!GameInput.getKey(GameInput.INVENTORY)){
