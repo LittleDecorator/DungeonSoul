@@ -41,7 +41,8 @@ public class Play extends GameState {
 
     private OrthogonalTiledMapRenderer tmr;     //map renderer
 
-    private Background[] backgrounds;
+//    private Background[] backgrounds;
+    private BackgroundHelper bh;
 
     private boolean debug = true;               //debug flag
 
@@ -79,9 +80,11 @@ public class Play extends GameState {
 
         // draw background
         sb.setProjectionMatrix(oCam.combined);
-        for(int i = 0; i < backgrounds.length; i++) {
-            backgrounds[i].render(sb);
-        }
+        bh.drawOnceFull(bh.getImgByNames("sky"),0,0);
+        bh.drawRow(bh.getImgByNames("clouds"),0, 20, 0, 0.1f);
+        bh.drawRow(bh.getImgByNames("mounts"),0, 1.5f, 0, 0.2f);
+//        why tree disapeare????
+//        bh.drawRow(bh.getImgByNames("tree"),0, 0, 1, 1);
 
         // draw tilemap
         tmr.setView(bCam);
@@ -98,10 +101,11 @@ public class Play extends GameState {
 
         //draw flame
         if(player.flameIsOn()) {
-            flame = player.getFlame();
-            flame.setCombinedMatrix(b2dCam.combined);
-            flame.updateAndRender();
-            DrawTexture.drawTorch(sb,.5f*PPM,.25f*PPM);
+//            flame = player.getFlame();
+//            flame.setCombinedMatrix(b2dCam.combined);
+//            flame.updateAndRender();
+            player.renderTourch(b2dCam);
+            DrawTexture.drawTorch(sb,player.getFixture("torch"));
         } else {
             //draw light point
             light.setCombinedMatrix(b2dCam.combined);
@@ -137,14 +141,17 @@ public class Play extends GameState {
 
     //crate background
     private void createBackground(){
+        bh = new BackgroundHelper(bCam,sb);
+
         Texture bgs = mapInfo.getBackground();
         TextureRegion sky = new TextureRegion(bgs, 0, 0, 320, 240);
-        TextureRegion clouds = new TextureRegion(bgs, 0, 240, 320, 240);
-        TextureRegion mountains = new TextureRegion(bgs, 0, 480, 320, 240);
-        backgrounds = new Background[3];
-        backgrounds[0] = new Background(sky, bCam, 0f);
-        backgrounds[1] = new Background(clouds, bCam, 0.1f);
-        backgrounds[2] = new Background(mountains, bCam, 0.2f);
+        bh.addImg("sky", sky);
+        TextureRegion clouds = new TextureRegion(bgs, 0, 240, 320, 160);
+        bh.addImg("clouds", clouds);
+        TextureRegion mountains = new TextureRegion(bgs, 0, 410, 320, 300);
+        bh.addImg("mounts", mountains);
+        TextureRegion tree = new TextureRegion(bgs, 80, 770, 150, 200);
+        bh.addImg("tree", tree);
     }
 
     private void setCam(){
