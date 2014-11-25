@@ -37,4 +37,6 @@ public interface Character{
 
     public void switchOrient();
     public boolean isRightOrient();
+
+    public int getLifeContainersCou();
 }

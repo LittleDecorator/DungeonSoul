@@ -12,5 +12,6 @@ public interface Sprites {
     public static final String POINTS = "assets/img/crystal.png";
     public static final String BARREL = "assets/img/barrel_n.png";
     public static final String TORCH = "assets/img/torch_small.png";
+    public static final String LIFE_CONTAINERS = "assets/img/life.png";
 
 }

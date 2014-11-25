@@ -32,6 +32,7 @@ public class Warrior extends B2DSprite implements Character{
     private int totalCrystals;
     private RayHandler flame;
     private Light torch;
+    private int lifeConteinersCou = 4;
 
     public boolean rightOrient = true;
     public Vector2 torchPos;
@@ -134,4 +135,9 @@ public class Warrior extends B2DSprite implements Character{
     public boolean isRightOrient(){
         return rightOrient;
     }
+
+    public int getLifeContainersCou() {
+        return lifeConteinersCou;
+    }
+
 }

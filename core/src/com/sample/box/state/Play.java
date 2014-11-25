@@ -41,7 +41,8 @@ public class Play extends GameState {
 
     private OrthogonalTiledMapRenderer tmr;     //map renderer
 
-//    private Background[] backgrounds;
+    private HUD hud;
+
     private BackgroundHelper bh;
 
     private boolean debug = true;               //debug flag
@@ -56,6 +57,7 @@ public class Play extends GameState {
         initWorld();        //init world
         initMap();          //init map
         initPlayer();       //init player
+        initHUD();          //init HUD
     }
 
     //update world via step
@@ -81,6 +83,7 @@ public class Play extends GameState {
         // draw background
         sb.setProjectionMatrix(oCam.combined);
         bh.render();
+        hud.render(sb);         // WHY ?????
 
         // draw tilemap
         tmr.setView(bCam);
@@ -177,6 +180,10 @@ public class Play extends GameState {
             player.collectCrystals();
         }
         bodies.clear();
+    }
+
+    private void initHUD(){
+        hud = new HUD(player);
     }
 
 }

@@ -30,6 +30,7 @@ public class PlayerFactory {
         //link resource
         GameHelper.getGame().getResource().loadTexture(Sprites.WARRIOR_LEFT,"player_l");
         GameHelper.getGame().getResource().loadTexture(Sprites.WARRIOR,"player");
+        GameHelper.getGame().getResource().loadTexture(Sprites.LIFE_CONTAINERS,"life");
         Warrior warrior = new Warrior(body);
         warrior.addFixture("torch",fixture);
         body.setUserData(warrior);
