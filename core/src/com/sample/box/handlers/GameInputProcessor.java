@@ -5,7 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Transform;
 import com.sample.box.character.Character;
+import com.sample.box.character.Warrior;
 import com.sample.box.entities.Barrel;
 import com.sample.box.entities.DisplayElement;
 import com.sample.box.factory.FontFactory;
@@ -20,6 +23,7 @@ import static com.sample.box.utils.Console.log;
 public class GameInputProcessor extends InputAdapter{
 
     private static Character body;
+    private Warrior warrior;
     private Vector2 velocity;
     private GameContactListener gcl;
     private boolean flag;
@@ -42,12 +46,32 @@ public class GameInputProcessor extends InputAdapter{
         }
         if(k== Input.Keys.D){
 //            log("right");
+            //turn right
+            if(!warrior.isRightOrient()){
+                CircleShape shape = ((CircleShape)warrior.getFixture("torch").getFixture().getShape());
+                Vector2 shapePos = shape.getPosition();
+                warrior.setRightAnimation();
+                shape.setPosition(new Vector2(shapePos.x + .25f,shapePos.y));
+                warrior.switchOrient();
+            }
+            ////////////////////////
+
             velocity.x = MOVE_SPEED;
             flag = true;
             GameInput.setKey(GameInput.RIGHT,true);
         }
         if(k== Input.Keys.A){
 //            log("left");
+            //turn left
+            if(warrior.isRightOrient()){
+                CircleShape shape = ((CircleShape)warrior.getFixture("torch").getFixture().getShape());
+                Vector2 shapePos = shape.getPosition();
+                warrior.setLeftAnimation();
+                shape.setPosition(new Vector2(shapePos.x - .25f,shapePos.y));
+                warrior.switchOrient();
+            }
+            ////////////////////////
+
             velocity.x = -MOVE_SPEED;
             flag = true;
             GameInput.setKey(GameInput.LEFT,true);
@@ -66,15 +90,7 @@ public class GameInputProcessor extends InputAdapter{
             ScreenHelper.getMenu().show();
         }
         if(k == Input.Keys.I){
-//            log(GameInput.getKey(GameInput.INVENTORY)?"TRUE":"FALSE");
-//            if(!GameInput.getKey(GameInput.INVENTORY)){
-                ScreenHelper.getInventory().show();
-//                GameInput.setKey(GameInput.INVENTORY,true);
-//            }/* else {
-//                ScreenHelper.getInventory().hide();
-//                GameInput.setKey(GameInput.INVENTORY,false);
-//            }*/
-
+           ScreenHelper.getInventory().show();
         }
         if(flag){
             body.getBody().applyForceToCenter(velocity,true);
@@ -126,4 +142,9 @@ public class GameInputProcessor extends InputAdapter{
         FontFactory.getFont8().draw(sb,body.getBody().getLinearVelocity().x +"; "+body.getBody().getLinearVelocity().y, body.getPosition().x * PPM, 1* PPM);
         sb.end();
     }
+
+    public void setWarrior(Warrior w){
+        warrior = w;
+    }
+
 }

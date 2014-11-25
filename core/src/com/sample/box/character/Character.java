@@ -2,6 +2,7 @@ package com.sample.box.character;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -29,7 +30,11 @@ public interface Character{
     public float getWidth();
     public float getHeight();
     public void setAnimation(TextureRegion[] reg, float delay);
+//    public void setAnimation(Texture t);
 
     public PositionedFixture getFixture(String key);
-    public void renderTourch(OrthographicCamera c);
+    public void renderTorch(OrthographicCamera c);
+
+    public void switchOrient();
+    public boolean isRightOrient();
 }

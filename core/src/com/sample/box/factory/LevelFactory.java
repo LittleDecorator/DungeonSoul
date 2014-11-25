@@ -138,9 +138,14 @@ public class LevelFactory {
         info.setTileMapWidth((Integer) tiledMap.getProperties().get("width"));
         info.setTileMapHeight((Integer) tiledMap.getProperties().get("height"));
         info.setTileSize((Integer) tiledMap.getProperties().get("tilewidth"));
+
         Content content =  GameHelper.getGame().getResource();
         content.loadTexture(Sprites.SURFACE_BACKGROUND,"background");
         info.setBackground(content.getTexture("background"));
+
+        content.loadTexture(Sprites.SURFACE_BACKGROUND_FOREST,"forest");
+        info.setBackForest(content.getTexture("forest"));
+
         info.setPoints(points);
         info.setBarrel(barrel);
         LevelHelper.setMapInfo(info);

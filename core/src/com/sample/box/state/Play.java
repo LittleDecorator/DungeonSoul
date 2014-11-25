@@ -80,11 +80,7 @@ public class Play extends GameState {
 
         // draw background
         sb.setProjectionMatrix(oCam.combined);
-        bh.drawOnceFull(bh.getImgByNames("sky"),0,0);
-        bh.drawRow(bh.getImgByNames("clouds"),0, 20, 0, 0.1f);
-        bh.drawRow(bh.getImgByNames("mounts"),0, 1.5f, 0, 0.2f);
-//        why tree disapeare????
-//        bh.drawRow(bh.getImgByNames("tree"),0, 0, 1, 1);
+        bh.render();
 
         // draw tilemap
         tmr.setView(bCam);
@@ -104,7 +100,7 @@ public class Play extends GameState {
 //            flame = player.getFlame();
 //            flame.setCombinedMatrix(b2dCam.combined);
 //            flame.updateAndRender();
-            player.renderTourch(b2dCam);
+            player.renderTorch(b2dCam);
             DrawTexture.drawTorch(sb,player.getFixture("torch"));
         } else {
             //draw light point
@@ -142,16 +138,7 @@ public class Play extends GameState {
     //crate background
     private void createBackground(){
         bh = new BackgroundHelper(bCam,sb);
-
-        Texture bgs = mapInfo.getBackground();
-        TextureRegion sky = new TextureRegion(bgs, 0, 0, 320, 240);
-        bh.addImg("sky", sky);
-        TextureRegion clouds = new TextureRegion(bgs, 0, 240, 320, 160);
-        bh.addImg("clouds", clouds);
-        TextureRegion mountains = new TextureRegion(bgs, 0, 410, 320, 300);
-        bh.addImg("mounts", mountains);
-        TextureRegion tree = new TextureRegion(bgs, 80, 770, 150, 200);
-        bh.addImg("tree", tree);
+        bh.init();
     }
 
     private void setCam(){

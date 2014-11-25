@@ -2,6 +2,7 @@ package com.sample.box.factory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.sample.box.Game;
 import com.sample.box.character.Character;
 import com.sample.box.character.Warrior;
 import com.sample.box.entities.DisplayElement;
@@ -27,11 +28,12 @@ public class PlayerFactory {
         //create player body
         Body body = build(world);
         //link resource
-//        GameHelper.getGame().getResource().loadTexture(Sprites.TEST,"player");
+        GameHelper.getGame().getResource().loadTexture(Sprites.WARRIOR_LEFT,"player_l");
         GameHelper.getGame().getResource().loadTexture(Sprites.WARRIOR,"player");
         Warrior warrior = new Warrior(body);
         warrior.addFixture("torch",fixture);
         body.setUserData(warrior);
+        GameHelper.getGame().getGip().setWarrior(warrior);
         return warrior;
     }
 
@@ -100,41 +102,17 @@ public class PlayerFactory {
 
         ps.dispose();
         cshape.setRadius(0.04f);
-        Vector2 pos = new Vector2(.6f,.25f);
-        Vector2 n = new Vector2(.2f, .11f);
+        Vector2 pos = new Vector2(.55f,.25f);
+        Vector2 n = new Vector2(.11f, .11f);        //first torch shape position
         cshape.setPosition(n);
-        System.out.println("pos x-> "+cshape.getPosition().x + " , y-> "+cshape.getPosition().y);
-        System.out.println("player x-> "+body.getPosition().x + " , y-> "+body.getPosition().y);
 
         fdef.shape = cshape;
         fdef.isSensor = true;
         Fixture f = body.createFixture(fdef);
         f.setUserData(GameHelper.getGame().getResource().getTexture("torch"));
         fixture = new PositionedFixture(pos,f);
-
         return body;
     }
 
-    /*public static void jointTorch(Body warBody,World world){
-
-        BodyDef bdef = new BodyDef();       //body definition
-        FixtureDef fdef = new FixtureDef();
-
-        CircleShape cshape = new CircleShape();
-
-        bdef.position.set(warBody.getPosition().x +.5f, warBody.getPosition().y + .5f);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        Body body = world.createBody(bdef);
-
-        cshape.setRadius(0.04f);                                    //radius
-        fdef.shape = cshape;                                                //set shape to fixture
-//        fdef.filter.categoryBits = B2DVars.BIT_POINT;           //def filter
-//        fdef.filter.maskBits = B2DVars.BIT_PLAYER;              //def maskBits
-        body.createFixture(fdef).setUserData("torch");          //add user data to fixture, as marker
-
-        GameHelper.getGame().getResource().loadTexture(Sprites.TORCH,"torch");
-
-        new JointBuilder(world).ropeJointBuilder().bodyA(body).bodyB(warBody).collideConnected(false).maxLength(.2f).build();
-    }*/
 
 }

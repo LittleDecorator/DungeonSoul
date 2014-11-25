@@ -6,6 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.sample.box.handlers.Animation;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static  com.sample.box.handlers.B2DVars.PPM;
 import static com.sample.box.utils.Console.log;
 
@@ -15,6 +18,7 @@ public class B2DSprite {
     protected Animation animation;
     protected float width;
     protected float height;
+    protected Map<String,PositionedFixture> fixtureMap = new HashMap<String, PositionedFixture>();
 
     public B2DSprite(Body body) {
         this.body = body;

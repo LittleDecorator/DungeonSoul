@@ -9,6 +9,7 @@ public class MapInfo {
     int tileMapHeight;                  //map height
     float tileSize;
     Texture background;           //background
+    Texture backForest;
     Array<Point> points;
     Barrel barrel;
 
@@ -58,5 +59,13 @@ public class MapInfo {
 
     public void setBarrel(Barrel barrel) {
         this.barrel = barrel;
+    }
+
+    public Texture getBackForest() {
+        return backForest;
+    }
+
+    public void setBackForest(Texture backForest) {
+        this.backForest = backForest;
     }
 }
