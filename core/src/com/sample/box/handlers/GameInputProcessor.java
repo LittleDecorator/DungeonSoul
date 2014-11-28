@@ -79,7 +79,7 @@ public class GameInputProcessor extends InputAdapter{
             flag = true;
         }
         if(k==Input.Keys.E/* && gcl.isMayLoot()*/){
-            ScreenHelper.getContainer().show(); //test for loot container
+            ScreenHelper.getContainer().show();
         }
         //show menu
         if(k== Input.Keys.ESCAPE){

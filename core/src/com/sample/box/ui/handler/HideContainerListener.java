@@ -4,8 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.sample.box.helpers.ScreenHelper;
+import com.sample.box.ui.stage.InventoryScreen;
 
-public class HideContainerListener extends ClickListener {
+public class HideContainerListener extends ClickListener{
 
     private Actor actor;
 
@@ -17,5 +18,6 @@ public class HideContainerListener extends ClickListener {
     public void clicked(InputEvent event, float x, float y) {
         ScreenHelper.getContainer().hide();
     }
+
 
 }

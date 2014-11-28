@@ -6,14 +6,8 @@ import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.sample.box.Game;
@@ -23,8 +17,8 @@ import com.sample.box.factory.LevelFactory;
 import com.sample.box.factory.PlayerFactory;
 import com.sample.box.handlers.*;
 import com.sample.box.helpers.*;
+import com.sample.box.ui.stage.ContainerScreen;
 import com.sample.box.ui.stage.InventoryScreen;
-import com.sample.box.ui.stage.LootScreen;
 import com.sample.box.ui.stage.MenuScreen;
 
 import static com.sample.box.utils.Console.log;
@@ -141,7 +135,7 @@ public class Play extends GameState {
         StateHelper.setWorld(world);                            //save world ref in state helper
         ScreenHelper.setInventory(new InventoryScreen());       //init inventory screen
         ScreenHelper.setMenu(new MenuScreen());                 //init menu screen
-        ScreenHelper.setContainer(new LootScreen());            //init loot screen
+        ScreenHelper.setContainer(new ContainerScreen());            //init loot screen
         //init needed textures
         SpriteHelper.loadAllTextures();
     }

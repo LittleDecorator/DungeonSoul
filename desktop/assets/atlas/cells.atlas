@@ -3,23 +3,30 @@ cells.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-cm
+cryslat
   rotate: false
   xy: 1, 1
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
-bottle
+cm
   rotate: false
   xy: 53, 1
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
-container
+bottle
   rotate: false
   xy: 105, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+container
+  rotate: false
+  xy: 157, 1
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
