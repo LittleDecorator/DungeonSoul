@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.sample.box.ui.*;
 import com.sample.box.ui.handler.HidingClickListener;
+import com.sample.box.ui.stage.InventoryScreen;
 
 public class InventoryActor extends Window {
 
@@ -25,7 +26,7 @@ public class InventoryActor extends Window {
         // run through all slots and create SlotActors for each
         int i = 0;
         for (Slot slot : inventory.getSlots()) {
-            SlotActor slotActor = new SlotActor(skin, slot);
+            SlotActor slotActor = new SlotActor(/*InventoryScreen.stage, */skin, slot);
             dragAndDrop.addSource(new SlotSource(slotActor));
             dragAndDrop.addTarget(new SlotTarget(slotActor));
             add(slotActor);

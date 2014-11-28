@@ -1,15 +1,19 @@
 package com.sample.box.helpers;
 
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.sample.box.entities.Sprites;
 
 public class SpriteHelper {
 
-    public void rightOrient(Body body){
-
+    public static void renderTexture(SpriteBatch sb, Texture tr, float x, float y){
+        sb.begin();
+        sb.draw(tr,x,y);
+        sb.end();
     }
 
-    public void leftOrient(Body body){
-
+    public static void loadAllTextures(){
+        GameHelper.getGame().getResource().loadTexture(Sprites.HAND,"hand");
     }
 
 }

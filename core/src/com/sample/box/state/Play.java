@@ -24,6 +24,7 @@ import com.sample.box.factory.PlayerFactory;
 import com.sample.box.handlers.*;
 import com.sample.box.helpers.*;
 import com.sample.box.ui.stage.InventoryScreen;
+import com.sample.box.ui.stage.LootScreen;
 import com.sample.box.ui.stage.MenuScreen;
 
 import static com.sample.box.utils.Console.log;
@@ -100,9 +101,6 @@ public class Play extends GameState {
 
         //draw flame
         if(player.flameIsOn()) {
-//            flame = player.getFlame();
-//            flame.setCombinedMatrix(b2dCam.combined);
-//            flame.updateAndRender();
             player.renderTorch(b2dCam);
             DrawTexture.drawTorch(sb,player.getFixture("torch"));
         } else {
@@ -122,9 +120,16 @@ public class Play extends GameState {
 //        InfoHelper.getInfo().render(sb);
         GameInputProcessor.drawVelInfo(sb);
 
+        //draw collide sprite
+        if(GameHelper.getGame().getGcl().isMayLoot()){
+            Vector2 playerPos = new Vector2(player.getBody().getPosition());
+            SpriteHelper.renderTexture(sb,GameHelper.getGame().getResource().getTexture("hand"),playerPos.x*PPM,(playerPos.y+.3f)*PPM);
+        }
+
         mapInfo.getBarrel().render(sb);
         ScreenHelper.getInventory().render(Gdx.graphics.getDeltaTime());        //render inventory content
         ScreenHelper.getMenu().render(Gdx.graphics.getDeltaTime());             //render menu modal
+        ScreenHelper.getContainer().render(Gdx.graphics.getDeltaTime());        //render loot table
     }
 
     public void dispose(){}
@@ -136,6 +141,9 @@ public class Play extends GameState {
         StateHelper.setWorld(world);                            //save world ref in state helper
         ScreenHelper.setInventory(new InventoryScreen());       //init inventory screen
         ScreenHelper.setMenu(new MenuScreen());                 //init menu screen
+        ScreenHelper.setContainer(new LootScreen());            //init loot screen
+        //init needed textures
+        SpriteHelper.loadAllTextures();
     }
 
     //crate background

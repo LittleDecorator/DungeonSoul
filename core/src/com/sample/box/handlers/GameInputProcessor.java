@@ -45,8 +45,6 @@ public class GameInputProcessor extends InputAdapter{
             flag = true;
         }
         if(k== Input.Keys.D){
-//            log("right");
-            //turn right
             if(!warrior.isRightOrient()){
                 CircleShape shape = ((CircleShape)warrior.getFixture("torch").getFixture().getShape());
                 Vector2 shapePos = shape.getPosition();
@@ -54,15 +52,12 @@ public class GameInputProcessor extends InputAdapter{
                 shape.setPosition(new Vector2(shapePos.x + .25f,shapePos.y));
                 warrior.switchOrient();
             }
-            ////////////////////////
 
             velocity.x = MOVE_SPEED;
             flag = true;
             GameInput.setKey(GameInput.RIGHT,true);
         }
         if(k== Input.Keys.A){
-//            log("left");
-            //turn left
             if(warrior.isRightOrient()){
                 CircleShape shape = ((CircleShape)warrior.getFixture("torch").getFixture().getShape());
                 Vector2 shapePos = shape.getPosition();
@@ -70,20 +65,21 @@ public class GameInputProcessor extends InputAdapter{
                 shape.setPosition(new Vector2(shapePos.x - .25f,shapePos.y));
                 warrior.switchOrient();
             }
-            ////////////////////////
 
             velocity.x = -MOVE_SPEED;
             flag = true;
             GameInput.setKey(GameInput.LEFT,true);
         }
         if(k== Input.Keys.F){
-//            log("flash");
             if(body.flameIsOn()){
                 body.flameOff();
             } else {
                 body.flameOn();
             }
             flag = true;
+        }
+        if(k==Input.Keys.E/* && gcl.isMayLoot()*/){
+            ScreenHelper.getContainer().show(); //test for loot container
         }
         //show menu
         if(k== Input.Keys.ESCAPE){

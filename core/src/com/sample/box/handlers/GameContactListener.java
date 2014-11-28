@@ -3,7 +3,10 @@ package com.sample.box.handlers;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.Array;
+import com.sample.box.entities.Barrel;
 import com.sample.box.entities.Point;
+import com.sample.box.helpers.ObjectHelper;
+
 import static com.sample.box.utils.Console.log;
 
 public class GameContactListener implements ContactListener {
@@ -14,6 +17,9 @@ public class GameContactListener implements ContactListener {
     private int enemyContact;
     private Array<Body> bodiesToRemove = new Array<Body>();
     private String dataBuff;
+
+//    private int mayLoot;
+    private boolean mayLoot;
 
     // called when two fixtures start to collide
     public void beginContact(Contact c){
@@ -45,8 +51,15 @@ public class GameContactListener implements ContactListener {
         }
 
         //hit enemy short_range
-        if(dataBuff.contains("enemyRightSensor") || dataBuff.contains("enemyRightSensor")){
+        if(dataBuff.contains("enemyRightSensor") || dataBuff.contains("enemyLeftSensor")){
             enemyContact++;
+        }
+
+        //if player collide with loot objects
+        if(dataBuff.contains("barrel") && ((Barrel)ObjectHelper.getObject("barrel")).getHealth()==0){
+            log("in barrel contact");
+//            mayLoot++;
+            mayLoot = true;
         }
     }
 
@@ -62,6 +75,11 @@ public class GameContactListener implements ContactListener {
 
     public boolean isPlayerCanHit(){
         return enemyContact>0;
+    }
+
+    public boolean isMayLoot(){
+//        return mayLoot>0;
+        return mayLoot;
     }
 
     // called when two fixtures end to collide
@@ -85,6 +103,12 @@ public class GameContactListener implements ContactListener {
 
         if(dataBuff.contains("enemyRightSensor") || dataBuff.contains("enemyRightSensor")){
             enemyContact--;
+        }
+
+        if(dataBuff.contains("barrel") && ((Barrel)ObjectHelper.getObject("barrel")).getHealth()==0){
+            log("leave barrel contact");
+//            mayLoot--;
+            mayLoot = false;
         }
     }
 

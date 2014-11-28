@@ -9,6 +9,7 @@ public class FontFactory {
 
     private static FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("assets/font/test.ttf"));
     private static BitmapFont font8;
+    private static BitmapFont font25;
 
     public static BitmapFont getFont8(){
         if(font8==null){
@@ -19,8 +20,21 @@ public class FontFactory {
         return font8;
     }
 
+    public static BitmapFont getFont25(){
+        if(font25==null){
+            FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+            parameter.size = 25;
+            generateFont25(parameter);
+        }
+        return font25;
+    }
+
     private static void generateFont8(FreeTypeFontParameter param){
         font8 = generator.generateFont(param);
+    }
+
+    private static void generateFont25(FreeTypeFontParameter param){
+        font25 = generator.generateFont(param);
     }
 
 }

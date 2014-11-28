@@ -1,0 +1,103 @@
+
+bg.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+warrior
+  rotate: false
+  xy: 1, 25
+  size: 61, 89
+  orig: 61, 89
+  offset: 0, 0
+  index: -1
+labelSlot
+  rotate: false
+  xy: 64, 90
+  size: 85, 24
+  orig: 85, 24
+  offset: 0, 0
+  index: -1
+nameMiddle
+  rotate: false
+  xy: 1, 1
+  size: 41, 22
+  orig: 41, 22
+  offset: 0, 0
+  index: -1
+ringSlot
+  rotate: false
+  xy: 64, 58
+  size: 29, 30
+  orig: 29, 30
+  offset: 0, 0
+  index: -1
+beltSlot
+  rotate: false
+  xy: 64, 29
+  size: 28, 27
+  orig: 28, 27
+  offset: 0, 0
+  index: -1
+gloverSlot
+  rotate: false
+  xy: 95, 60
+  size: 27, 28
+  orig: 27, 28
+  offset: 0, 0
+  index: -1
+coatSlot
+  rotate: false
+  xy: 151, 89
+  size: 28, 25
+  orig: 28, 25
+  offset: 0, 0
+  index: -1
+itemSlot
+  rotate: false
+  xy: 124, 62
+  size: 25, 26
+  orig: 25, 26
+  offset: 0, 0
+  index: -1
+bootSlot
+  rotate: false
+  xy: 181, 89
+  size: 27, 25
+  orig: 27, 25
+  offset: 0, 0
+  index: -1
+nekSlot
+  rotate: false
+  xy: 151, 62
+  size: 26, 25
+  orig: 26, 25
+  offset: 0, 0
+  index: -1
+weaponSlot
+  rotate: false
+  xy: 210, 88
+  size: 25, 26
+  orig: 25, 26
+  offset: 0, 0
+  index: -1
+quiverSlot
+  rotate: false
+  xy: 179, 63
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+nameOpen
+  rotate: false
+  xy: 205, 63
+  size: 24, 23
+  orig: 24, 23
+  offset: 0, 0
+  index: -1
+nameClose
+  rotate: false
+  xy: 44, 1
+  size: 20, 22
+  orig: 20, 22
+  offset: 0, 0
+  index: -1

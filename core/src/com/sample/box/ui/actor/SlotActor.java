@@ -3,6 +3,7 @@ package com.sample.box.ui.actor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -10,7 +11,7 @@ import com.sample.box.ui.Slot;
 import com.sample.box.ui.handler.SlotListener;
 import com.sample.box.ui.SlotTooltip;
 import com.sample.box.ui.handler.TooltipListener;
-import com.sample.box.ui.stage.InventoryScreen;
+//import com.sample.box.ui.stage.InventoryScreen;
 
 public class SlotActor extends ImageButton implements SlotListener{
 
@@ -18,7 +19,7 @@ public class SlotActor extends ImageButton implements SlotListener{
 
     private Skin skin;
 
-    public SlotActor(Skin skin, Slot slot) {
+    public SlotActor(/*Stage stage, */Skin skin, Slot slot) {
         super(createStyle(skin, slot));
         this.slot = slot;
         this.skin = skin;
@@ -27,9 +28,9 @@ public class SlotActor extends ImageButton implements SlotListener{
         slot.addListener(this);
 
         // ignore this for now, it will be explained in part IV
-        SlotTooltip tooltip = new SlotTooltip(slot, skin);
-        InventoryScreen.stage.addActor(tooltip);
-        addListener(new TooltipListener(tooltip, true));
+//        SlotTooltip tooltip = new SlotTooltip(slot, skin);
+//        stage.addActor(tooltip);
+//        addListener(new TooltipListener(tooltip, true));
     }
 
     /**
