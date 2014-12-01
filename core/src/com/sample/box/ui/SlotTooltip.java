@@ -3,7 +3,8 @@ package com.sample.box.ui;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.sample.box.ui.handler.SlotListener;
+import com.sample.box.ui.entity.Slot;
+import com.sample.box.ui.listeners.SlotListener;
 
 public class SlotTooltip extends Window implements SlotListener {
 

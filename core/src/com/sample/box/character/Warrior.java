@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.utils.Array;
 import com.sample.box.entities.B2DSprite;
 import com.sample.box.entities.DisplayElement;
 import com.sample.box.entities.PositionedFixture;
@@ -21,6 +22,7 @@ import com.sample.box.helpers.DrawTexture;
 import com.sample.box.helpers.GameHelper;
 import com.sample.box.helpers.InfoHelper;
 import com.sample.box.helpers.StateHelper;
+import com.sample.box.ui.entity.Item;
 
 import java.util.*;
 
@@ -35,10 +37,12 @@ public class Warrior extends B2DSprite implements Character{
     private int lifeConteinersCou = 4;
 
     public boolean rightOrient = true;
-    public Vector2 torchPos;
+
+    private static Array<Item> inventory;
 
     public Warrior(Body body) {
         super(body);
+        inventory = new Array<Item>();
         InfoHelper.getInfo().storeElement(new DisplayElement(body));
         Texture tex = GameHelper.getGame().getResource().getTexture("player");
         TextureRegion[] sprites = TextureRegion.split(tex,32,30)[0];
@@ -140,4 +144,11 @@ public class Warrior extends B2DSprite implements Character{
         return lifeConteinersCou;
     }
 
+    public static Array<Item> getInventory() {
+        return inventory;
+    }
+
+    public static void setInventory(Array<Item> inventory) {
+        Warrior.inventory = inventory;
+    }
 }

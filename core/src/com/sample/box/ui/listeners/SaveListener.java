@@ -1,4 +1,4 @@
-package com.sample.box.ui.handler;
+package com.sample.box.ui.listeners;
 
 /**
  * Created by nikolay on 11/6/14.

@@ -1,4 +1,4 @@
-package com.sample.box.ui.handler;
+package com.sample.box.ui.listeners;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;

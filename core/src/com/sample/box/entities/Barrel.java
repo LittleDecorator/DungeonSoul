@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Array;
 import com.sample.box.factory.FontFactory;
 import com.sample.box.helpers.GameHelper;
 import com.sample.box.helpers.InfoHelper;
+import com.sample.box.helpers.TextureHelper;
+import com.sample.box.ui.entity.Item;
 
 import static com.sample.box.handlers.B2DVars.PPM;
 
@@ -16,6 +19,8 @@ public class Barrel extends B2DSprite implements Destroyable, Container{
     private TextureRegion fine;
     private TextureRegion broken;
     private TextureRegion currFrame;
+
+    private Array<Item> items;
 
     private int timerCou =0;
     private float upVal = .001f;
@@ -33,6 +38,11 @@ public class Barrel extends B2DSprite implements Destroyable, Container{
         fine = sprites[0];
         broken = sprites[1];
         currFrame = fine;
+
+        //fill with items
+        items = new Array<Item>();
+        items.add(new Item("scroll","simple scroll", TextureHelper.getScroll(), ItemType.OTHER));
+        items.add(new Item("bottle","antidote", TextureHelper.getBottle(),ItemType.BOTTLE));
     }
 
     @Override
@@ -71,5 +81,23 @@ public class Barrel extends B2DSprite implements Destroyable, Container{
             upVal = .1f;
         }
         System.out.println("health: "+health);
+    }
+
+    public Array<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(Array<Item> items) {
+        this.items = items;
+    }
+
+    @Override
+    public Array<Item> getInventory() {
+        return items;
+    }
+
+    @Override
+    public void setInventory(Array<Item> items) {
+        this.items = items;
     }
 }

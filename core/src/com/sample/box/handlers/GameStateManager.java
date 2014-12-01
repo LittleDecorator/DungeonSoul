@@ -20,9 +20,9 @@ public class GameStateManager {
     }
 
     //get current game state update by delta and render
-    public void updateAndRender(float dt){
+    public void updateAndRender(/*float dt*/){
         GameState curr = gameStates.peek();
-        curr.update(dt);
+        curr.update();
         curr.render();
     }
 

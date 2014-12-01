@@ -56,17 +56,17 @@ public class Play extends GameState {
     }
 
     //update world via step
-    public void update(float dt){
+    public void update(){
         if(!GameHelper.getGame().isPaused()){
-            world.step(dt,6,2);                 //make step
+            world.step(1f/60f,6,2);                 //make step
             bCam.update();
             collectPoint();
-            player.update(dt);                  // update player
+            player.update(Gdx.graphics.getDeltaTime());                  // update player
             // update crystals
             for(int i = 0; i < mapInfo.getPoints().size; i++) {
-                mapInfo.getPoints().get(i).update(dt);
+                mapInfo.getPoints().get(i).update(Gdx.graphics.getDeltaTime());
             }
-            mapInfo.getBarrel().update(dt);
+            mapInfo.getBarrel().update(Gdx.graphics.getDeltaTime());
         }
     }
 

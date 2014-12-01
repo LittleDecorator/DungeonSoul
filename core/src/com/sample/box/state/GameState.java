@@ -30,7 +30,7 @@ public abstract class GameState {
         InfoHelper.setInfo(new Info());                 //create info instance
     }
 
-    public abstract void update(float dt);
+    public abstract void update(/*float dt*/);
     public abstract void render();
     public abstract void dispose();
 

@@ -1,17 +1,14 @@
+/*
 package com.sample.box.ui.actor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.sample.box.ui.Slot;
+import com.sample.box.ui.entity.Slot;
 import com.sample.box.ui.handler.SlotListener;
-import com.sample.box.ui.SlotTooltip;
-import com.sample.box.ui.handler.TooltipListener;
-//import com.sample.box.ui.stage.InventoryScreen;
 
 public class SlotActor extends ImageButton implements SlotListener{
 
@@ -19,7 +16,7 @@ public class SlotActor extends ImageButton implements SlotListener{
 
     private Skin skin;
 
-    public SlotActor(/*Stage stage, */Skin skin, Slot slot) {
+    public SlotActor(Skin skin, Slot slot) {
         super(createStyle(skin, slot));
         this.slot = slot;
         this.skin = skin;
@@ -33,9 +30,11 @@ public class SlotActor extends ImageButton implements SlotListener{
 //        addListener(new TooltipListener(tooltip, true));
     }
 
-    /**
+    */
+/**
      * This will create a new style for our image button, with the correct image for the item type.
-     */
+     *//*
+
     private static ImageButtonStyle createStyle(Skin skin, Slot slot) {
         TextureAtlas icons = new TextureAtlas(Gdx.files.internal("assets/atlas/icons.atlas"));
         TextureRegion image;
@@ -62,3 +61,4 @@ public class SlotActor extends ImageButton implements SlotListener{
         return slot;
     }
 }
+*/

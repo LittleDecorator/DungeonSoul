@@ -3,9 +3,11 @@ package com.sample.box.handlers;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.Array;
+import com.sample.box.character.Warrior;
 import com.sample.box.entities.Barrel;
 import com.sample.box.entities.Point;
 import com.sample.box.helpers.ObjectHelper;
+import com.sample.box.ui.stage.ContainerScreen;
 
 import static com.sample.box.utils.Console.log;
 
@@ -18,8 +20,7 @@ public class GameContactListener implements ContactListener {
     private Array<Body> bodiesToRemove = new Array<Body>();
     private String dataBuff;
 
-//    private int mayLoot;
-    private boolean mayLoot;
+    private int mayLoot;
 
     // called when two fixtures start to collide
     public void beginContact(Contact c){
@@ -56,10 +57,14 @@ public class GameContactListener implements ContactListener {
         }
 
         //if player collide with loot objects
-        if(dataBuff.contains("barrel") && ((Barrel)ObjectHelper.getObject("barrel")).getHealth()==0){
+        if(dataBuff.contains("barrel")/* && ((Barrel)ObjectHelper.getObject("barrel")).getHealth()==0*/){
             log("in barrel contact");
-//            mayLoot++;
-            mayLoot = true;
+            if(fb.getBody().getUserData() instanceof Barrel){
+                ContainerScreen.setContainerSource((Barrel)fb.getBody().getUserData());
+            } else {
+                ContainerScreen.setContainerSource((Barrel)fa.getBody().getUserData());
+            }
+            mayLoot++;
         }
     }
 
@@ -78,8 +83,7 @@ public class GameContactListener implements ContactListener {
     }
 
     public boolean isMayLoot(){
-//        return mayLoot>0;
-        return mayLoot;
+        return mayLoot>0;
     }
 
     // called when two fixtures end to collide
@@ -106,9 +110,7 @@ public class GameContactListener implements ContactListener {
         }
 
         if(dataBuff.contains("barrel") && ((Barrel)ObjectHelper.getObject("barrel")).getHealth()==0){
-            log("leave barrel contact");
-//            mayLoot--;
-            mayLoot = false;
+            mayLoot--;
         }
     }
 

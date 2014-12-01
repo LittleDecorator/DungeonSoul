@@ -10,12 +10,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
+import com.badlogic.gdx.utils.Array;
+import com.sample.box.character.Warrior;
 import com.sample.box.helpers.GameHelper;
 import com.sample.box.helpers.TextureHelper;
-import com.sample.box.ui.DragSource;
-import com.sample.box.ui.DragTarget;
+import com.sample.box.ui.drag.DragSource;
+import com.sample.box.ui.drag.DragTarget;
 import com.sample.box.ui.actor.ImageActor;
-import com.sample.box.ui.handler.HideInventoryListener;
+import com.sample.box.ui.entity.Item;
+import com.sample.box.ui.listeners.HideInventoryListener;
 
 public class InventoryScreen implements Screen {
 
@@ -23,6 +26,8 @@ public class InventoryScreen implements Screen {
 
 //    private Table lootWindow;
     private Window lootWindow;
+
+    Table staff;
 
     public static Stage stage;
 
@@ -47,6 +52,7 @@ public class InventoryScreen implements Screen {
         if(stage==null){
             init();
         }
+        fillInventory();
         Gdx.input.setInputProcessor(stage);
         lootWindow.setVisible(true);
         setNeedRender(true);
@@ -106,7 +112,7 @@ public class InventoryScreen implements Screen {
         Table person = new Table(skin); //table for character equip
         Table stats = new Table(skin);  //table for defense abd other
         Table ground = new Table(skin); //table for items on the ground
-        Table staff = new Table(skin);  //table for quiver,weapons,items
+        staff = new Table(skin);  //table for quiver,weapons,items
 
         quick.debug();
         person.debug();
@@ -142,12 +148,12 @@ public class InventoryScreen implements Screen {
         return inventory;
     }
 
-    private Drawable getGray(){
+    /*private Drawable getGray(){
         Pixmap pm1 = new Pixmap(1, 1, Pixmap.Format.RGB565);
         pm1.setColor(Color.LIGHT_GRAY);
         pm1.fill();
         return new TextureRegionDrawable(new TextureRegion(new Texture(pm1)));
-    }
+    }*/
 
     private void createQuick(Table table, Skin skin){
         TextField fieldQ = new TextField("Quiver",skin);
@@ -171,7 +177,7 @@ public class InventoryScreen implements Screen {
         table.row();
         //items
         table.add(fieldI).width(150).height(50).colspan(3).row();
-        table.add(getDefContainer(TextureHelper.getBottle())).width(50).height(50);
+        table.add(getDefContainer(null)).width(50).height(50);
         table.add(getDefContainer(null)).width(50).height(50);
         table.add(getDefContainer(null)).width(50).height(50);
     }
@@ -204,6 +210,26 @@ public class InventoryScreen implements Screen {
         }
     }
 
+    //fill inventory staff
+    private void fillInventory(){
+        Array<ImageActor> staffPool = new Array<ImageActor>();
+        Array<Item> inventory = Warrior.getInventory();
+
+        //foreach cell we create slot
+        for(Cell cell: staff.getCells()) {
+            if (cell.getActor() instanceof Container) {
+                ImageActor actor = (ImageActor)((Container) cell.getActor()).getActor();
+                actor.clear();
+                staffPool.add(actor);
+            }
+        }
+
+        for(int k = 0 ; k< inventory.size; k++){
+            ImageActor endCellActor = staffPool.get(k);
+            endCellActor.setImage(inventory.get(k).getImage());
+        }
+    }
+
     private Container getDefContainer(TextureRegion tr){
         Container<Image> container = new Container<Image>();
         container.minWidth(50);
@@ -216,8 +242,8 @@ public class InventoryScreen implements Screen {
         } else {
             imageActor = new ImageActor();
         }
-        dragAndDrop.addSource(new DragSource(imageActor));
-        dragAndDrop.addTarget(new DragTarget(imageActor));
+//        dragAndDrop.addSource(new DragSource(imageActor));
+//        dragAndDrop.addTarget(new DragTarget(imageActor));
         container.setActor(imageActor);
         container.setBackground(new TextureRegionDrawable(TextureHelper.getCell()));
         return container;

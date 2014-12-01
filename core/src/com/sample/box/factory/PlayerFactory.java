@@ -2,17 +2,12 @@ package com.sample.box.factory;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.sample.box.Game;
 import com.sample.box.character.Character;
 import com.sample.box.character.Warrior;
-import com.sample.box.entities.DisplayElement;
 import com.sample.box.entities.PositionedFixture;
 import com.sample.box.entities.Sprites;
 import com.sample.box.handlers.B2DVars;
-import com.sample.box.handlers.GameInputProcessor;
 import com.sample.box.helpers.GameHelper;
-import com.sample.box.helpers.InfoHelper;
-import com.sample.box.helpers.JointBuilder;
 
 import java.util.List;
 

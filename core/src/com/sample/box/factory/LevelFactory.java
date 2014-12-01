@@ -115,7 +115,7 @@ public class LevelFactory {
 
         //create barrel
         bdef.type = BodyDef.BodyType.StaticBody;                        //make it static
-        bdef.position.set(5f,.235f);
+        bdef.position.set(2f,.235f);
         Body body = world.createBody(bdef);                     //create body
         pshape.setAsBox(0.13f, 0.13f);
         fdef.shape = pshape;                                                //set shape to fixture
@@ -125,6 +125,7 @@ public class LevelFactory {
         body.createFixture(fdef).setUserData("barrel");          //add user data to fixture, as marker
         GameHelper.getGame().getResource().loadTexture(Sprites.BARREL,"barrel");     //load point texture
         barrel = new Barrel(body);
+        body.setUserData(barrel);                               //set barrel object itself to userData
         ObjectHelper.addObject("barrel",barrel);
     }
 

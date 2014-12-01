@@ -1,15 +1,16 @@
-package com.sample.box.ui;
+package com.sample.box.ui.drag;
 
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.*;
 import com.sample.box.ui.actor.ImageActor;
+import com.sample.box.ui.entity.Slot;
 
 public class DragTarget extends Target {
 
-    private ImageActor iActor;
+    private Slot slot;
 
-    public DragTarget(ImageActor iActor) {
-        super(iActor);
-        this.iActor = iActor;
+    public DragTarget(Slot slot) {
+        super(slot.getActor());
+        this.slot = slot;
     }
 
     @Override

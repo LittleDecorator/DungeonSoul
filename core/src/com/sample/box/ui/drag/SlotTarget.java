@@ -1,8 +1,10 @@
-package com.sample.box.ui;
+/*
+package com.sample.box.ui.drag;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.*;
 import com.sample.box.ui.actor.SlotActor;
+import com.sample.box.ui.entity.Slot;
 
 public class SlotTarget extends Target{
 
@@ -35,3 +37,4 @@ public class SlotTarget extends Target{
         getActor().setColor(Color.LIGHT_GRAY);
     }
 }
+*/

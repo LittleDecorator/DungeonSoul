@@ -1,4 +1,4 @@
-package com.sample.box.helpers;
+package com.sample.box.factory;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Joint;

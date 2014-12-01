@@ -31,9 +31,7 @@ public class Game implements ApplicationListener {
     public static final int V_WIDTH = 640;
     public static final int SCALE =2;
 
-    public static final float STEP = 1/60f;
     private boolean isPaused= false;
-    private float accum;
 
     private BoundedCamera bCam;
     private OrthographicCamera oCam;
@@ -60,14 +58,9 @@ public class Game implements ApplicationListener {
     }
 
     public void render(){
-        /*Gdx.graphics.setTitle(TITLE + " -- FPS: " + Gdx.graphics.getFramesPerSecond());
-        gsm.updateAndRender(Gdx.graphics.getDeltaTime());*/
+//        Gdx.graphics.setTitle(TITLE + " -- FPS: " + Gdx.graphics.getFramesPerSecond());
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        accum += Gdx.graphics.getDeltaTime();           //collect delta (think it something like fps)
-        while(accum>=STEP){                             //if we can make step in world, then update manager and render
-            accum -= STEP;
-            gsm.updateAndRender(STEP);
-        }
+        gsm.updateAndRender();
     }
 
     public void dispose(){}

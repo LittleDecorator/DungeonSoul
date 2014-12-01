@@ -1,6 +1,6 @@
-package com.sample.box.ui.handler;
+package com.sample.box.ui.listeners;
 
-import com.sample.box.ui.Slot;
+import com.sample.box.ui.entity.Slot;
 
 public interface SlotListener {
 

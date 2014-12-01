@@ -1,4 +1,5 @@
-package com.sample.box.ui;
+/*
+package com.sample.box.ui.drag;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -7,8 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.*;
-import com.sample.box.Game;
+import com.sample.box.ui.entity.Item;
 import com.sample.box.ui.actor.SlotActor;
+import com.sample.box.ui.entity.Slot;
 
 public class SlotSource extends Source {
 
@@ -69,3 +71,4 @@ public class SlotSource extends Source {
     }
 
 }
+*/
