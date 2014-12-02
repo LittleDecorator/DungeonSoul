@@ -17,7 +17,9 @@ import com.sample.box.helpers.TextureHelper;
 import com.sample.box.ui.drag.DragSource;
 import com.sample.box.ui.drag.DragTarget;
 import com.sample.box.ui.actor.ImageActor;
+import com.sample.box.ui.entity.Inventory;
 import com.sample.box.ui.entity.Item;
+import com.sample.box.ui.entity.Slot;
 import com.sample.box.ui.listeners.HideInventoryListener;
 
 public class InventoryScreen implements Screen {
@@ -27,7 +29,7 @@ public class InventoryScreen implements Screen {
 //    private Table lootWindow;
     private Window lootWindow;
 
-    Table staff;
+    Inventory inventory;
 
     public static Stage stage;
 
@@ -36,13 +38,14 @@ public class InventoryScreen implements Screen {
     private void init(){
         // create the stage and make it receive all input
         stage = new Stage();
+        inventory = Warrior.getInventory();
 
         Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
 
         dragAndDrop = new DragAndDrop();
         dragAndDrop.setDragActorPosition(-25,25);       //offset of dragable item
 
-        lootWindow = createTestWindow(skin);
+        lootWindow = createView(skin);
 
         stage.addActor(lootWindow);                 // add window to stage
     }
@@ -52,7 +55,6 @@ public class InventoryScreen implements Screen {
         if(stage==null){
             init();
         }
-        fillInventory();
         Gdx.input.setInputProcessor(stage);
         lootWindow.setVisible(true);
         setNeedRender(true);
@@ -98,52 +100,46 @@ public class InventoryScreen implements Screen {
         this.needRender = needRender;
     }
 
-    private Window createTestWindow(Skin skin){
+    private Window createView(Skin skin){
 
         Window inventory = new Window("Inventory",skin);
+//        Table inventory = new Table(skin);
+//        inventory.debug();
         addClose(inventory, skin);           // ?????
 
         inventory.setPosition(300, 250);
-        inventory.setSize(500, 420);
+        inventory.setSize(550, 450);
 
         inventory.setMovable(true);
 
         Table quick = new Table(skin);  //table for quiver,weapons,items
         Table person = new Table(skin); //table for character equip
-        Table stats = new Table(skin);  //table for defense abd other
-        Table ground = new Table(skin); //table for items on the ground
-        staff = new Table(skin);  //table for quiver,weapons,items
+        Table staff = new Table(skin);  //table for quiver,weapons,items
 
-        quick.debug();
+/*        quick.debug();
         person.debug();
-        stats.debug();
-        ground.debug();
-        staff.debug();
+        staff.debug();*/
 
         //add tables to container
         //set quick table
         Cell cQuick = inventory.add(quick);
-        cQuick.width(150).height(300);
+        cQuick.width(150).height(300).space(5);
 
         //set person table
         Cell cPerson = inventory.add(person);
-        cPerson.width(200).height(300);
-
-        //set stat table
-        Cell cStat = inventory.add(stats);
-        cStat.width(150).height(300);
+        cPerson.width(300).height(300).space(5);
 
         //new row
         inventory.row();
 
         //set quick table
         Cell cStaff = inventory.add(staff);
-        cStaff.width(500).height(100).colspan(3);
+        cStaff.width(500).height(100).colspan(3).space(5);
 
         //now try fill inner tables
         createQuick(quick,skin);
-        createPerson(person, skin);
-        createStaff(staff, skin);
+        createPerson(person);
+        createStaff(staff);
 
         return inventory;
     }
@@ -156,64 +152,103 @@ public class InventoryScreen implements Screen {
     }*/
 
     private void createQuick(Table table, Skin skin){
-        TextField fieldQ = new TextField("Quiver",skin);
-        fieldQ.setDisabled(true);
-        TextField fieldW = new TextField("Weapon",skin);
-        fieldW.setDisabled(true);
-        TextField fieldI = new TextField("Items",skin);
-        fieldI.setDisabled(true);
+        Label qLabel = new Label("Quiver",skin);
+        qLabel.setAlignment(Align.center);
+        Label wLabel = new Label("Weapon",skin);
+        wLabel.setAlignment(Align.center);
+        Label iLabel = new Label("Items",skin);
+        iLabel.setAlignment(Align.center);
 
         //arrows
-        table.add(fieldQ).width(150).height(50).colspan(3).row();
-        table.add(getDefContainer(null)).width(50).height(50);
-        table.add(getDefContainer(null)).width(50).height(50);
-        table.add(getDefContainer(null)).width(50).height(50);
+        table.add(qLabel).width(150).height(30).colspan(3).space(0, 0, 5, 0).row();
+        for(Slot slot : inventory.getQuiverSlots()){
+            dragAndDrop.addSource(new DragSource(slot.getActor()));
+            dragAndDrop.addTarget(new DragTarget(slot.getActor()));
+            table.add(slot).width(50).height(50).space(0,0,15,0);
+        }
         table.row();
+
         //weapons
-        table.add(fieldW).width(150).height(50).colspan(3).row();
-        table.add(getDefContainer(null)).width(50).height(50);
-        table.add(getDefContainer(null)).width(50).height(50);
-        table.add(getDefContainer(null)).width(50).height(50);
+        table.add(wLabel).width(150).height(30).colspan(3).space(0, 0, 5, 0).row();
+        for(Slot slot : inventory.getWeaponSlots()){
+            dragAndDrop.addSource(new DragSource(slot.getActor()));
+            dragAndDrop.addTarget(new DragTarget(slot.getActor()));
+            table.add(slot).width(50).height(50).space(0, 0,15, 0);
+        }
         table.row();
+
         //items
-        table.add(fieldI).width(150).height(50).colspan(3).row();
-        table.add(getDefContainer(null)).width(50).height(50);
-        table.add(getDefContainer(null)).width(50).height(50);
-        table.add(getDefContainer(null)).width(50).height(50);
+        table.add(iLabel).width(150).height(30).colspan(3).space(0, 0, 5, 0).row();
+        for(Slot slot : inventory.getItemSlots()){
+            dragAndDrop.addSource(new DragSource(slot.getActor()));
+            dragAndDrop.addTarget(new DragTarget(slot.getActor()));
+            table.add(slot).width(50).height(50).space(0, 0,15, 0);
+        }
     }
 
-    private void createPerson(Table table, Skin skin){
+    private void createPerson(Table table){
+        VerticalGroup leftArm = new VerticalGroup();
+        leftArm.setHeight(100);
+        leftArm.addActor(inventory.getLeftShoulder());
+        leftArm.addActor(inventory.getLeftHand());
+
+        VerticalGroup rightArm = new VerticalGroup();
+        rightArm.setHeight(100);
+        rightArm.addActor(inventory.getRightShoulder());
+        rightArm.addActor(inventory.getRightHand());
+
+        HorizontalGroup legs = new HorizontalGroup();
+        legs.setWidth(100);
+        legs.addActor(inventory.getLeftLeg());
+        legs.addActor(inventory.getRightLeg());
+
+        HorizontalGroup ankles = new HorizontalGroup();
+        ankles.setWidth(100);
+        ankles.addActor(inventory.getLeftAnkle());
+        ankles.addActor(inventory.getRightAnkle());
+
         //head
-        table.add(getDefContainer(null)).width(50).height(50);
-        table.add(getDefContainer(null)).width(50).height(50);
-        table.add(getDefContainer(null)).width(50).height(50);
-        table.add(getDefContainer(null)).width(50).height(50);
+        table.add().width(100).height(50);
+
+        table.add(inventory.getHead());
+        table.add(inventory.getAmulet()).spaceLeft(25);
         table.row();
 
-        //person pic
-        table.add().width(150).height(200).colspan(3);
-        table.add(getDefContainer(null)).width(50).height(50);
+        table.add(leftArm).width(50).height(50).top().right();
+        table.add(inventory.getChest()).space(25);
+        table.add(rightArm).width(50).height(50).top().left();
         table.row();
 
-        //down
-        table.add(getDefContainer(null)).width(50).height(50);
-        table.add(getDefContainer(null)).width(50).height(50);
-        table.add(getDefContainer(null)).width(50).height(50);
+        table.add(inventory.getLeftRing()).spaceRight(25);
+        table.add(legs).width(50).height(50).left();
+        table.add(inventory.getRightRing()).spaceLeft(25);
+        table.row();
+
+
+        table.add().width(100).height(50).left().spaceTop(20);
+        table.add(ankles).width(50).height(50).left();
+        table.add().width(100).height(50).right();
+
     }
 
-    private void createStaff(Table table, Skin skin){
+    private void createStaff(Table table){
+        Array<Slot> slots = inventory.getStashSlots();
+        System.out.println(slots.size);
         for(int i=0 ; i<2;i++){
             for(int j=0;j<10;j++){
-                table.add(getDefContainer(null)).width(50).height(50);
+                Slot slot = slots.get((i*10)+j);
+                dragAndDrop.addSource(new DragSource(slot.getActor()));
+                dragAndDrop.addTarget(new DragTarget(slot.getActor()));
+                table.add(slot).width(50).height(50);
             }
             table.row();
         }
     }
 
     //fill inventory staff
-    private void fillInventory(){
+ /*   private void fillInventory(){
         Array<ImageActor> staffPool = new Array<ImageActor>();
-        Array<Item> inventory = Warrior.getInventory();
+        Array<Item> inventory = Warrior.getInventory().getStashItems();
 
         //foreach cell we create slot
         for(Cell cell: staff.getCells()) {
@@ -228,26 +263,7 @@ public class InventoryScreen implements Screen {
             ImageActor endCellActor = staffPool.get(k);
             endCellActor.setImage(inventory.get(k).getImage());
         }
-    }
-
-    private Container getDefContainer(TextureRegion tr){
-        Container<Image> container = new Container<Image>();
-        container.minWidth(50);
-        container.minHeight(50);
-
-        ImageActor imageActor;
-
-        if(tr!=null){
-            imageActor = new ImageActor(tr);
-        } else {
-            imageActor = new ImageActor();
-        }
-//        dragAndDrop.addSource(new DragSource(imageActor));
-//        dragAndDrop.addTarget(new DragTarget(imageActor));
-        container.setActor(imageActor);
-        container.setBackground(new TextureRegionDrawable(TextureHelper.getCell()));
-        return container;
-    }
+    }*/
 
         private void addClose(Window w, Skin skin){
         TextButton closeButton = new TextButton("X", skin);

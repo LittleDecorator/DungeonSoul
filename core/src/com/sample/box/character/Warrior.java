@@ -22,6 +22,7 @@ import com.sample.box.helpers.DrawTexture;
 import com.sample.box.helpers.GameHelper;
 import com.sample.box.helpers.InfoHelper;
 import com.sample.box.helpers.StateHelper;
+import com.sample.box.ui.entity.Inventory;
 import com.sample.box.ui.entity.Item;
 
 import java.util.*;
@@ -38,11 +39,11 @@ public class Warrior extends B2DSprite implements Character{
 
     public boolean rightOrient = true;
 
-    private static Array<Item> inventory;
+    private static Inventory inventory;
 
     public Warrior(Body body) {
         super(body);
-        inventory = new Array<Item>();
+        inventory = new Inventory();
         InfoHelper.getInfo().storeElement(new DisplayElement(body));
         Texture tex = GameHelper.getGame().getResource().getTexture("player");
         TextureRegion[] sprites = TextureRegion.split(tex,32,30)[0];
@@ -144,11 +145,11 @@ public class Warrior extends B2DSprite implements Character{
         return lifeConteinersCou;
     }
 
-    public static Array<Item> getInventory() {
+    public static Inventory getInventory() {
         return inventory;
     }
 
-    public static void setInventory(Array<Item> inventory) {
+    public static void setInventory(Inventory inventory) {
         Warrior.inventory = inventory;
     }
 }

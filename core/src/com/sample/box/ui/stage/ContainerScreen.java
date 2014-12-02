@@ -17,9 +17,12 @@ import com.sample.box.helpers.TextureHelper;
 import com.sample.box.ui.drag.DragSource;
 import com.sample.box.ui.drag.DragTarget;
 import com.sample.box.ui.actor.ImageActor;
+import com.sample.box.ui.entity.Inventory;
 import com.sample.box.ui.entity.Item;
 import com.sample.box.entities.Container;
 import com.sample.box.ui.entity.Slot;
+
+import java.util.Arrays;
 
 public class ContainerScreen implements Screen {
 
@@ -46,6 +49,7 @@ public class ContainerScreen implements Screen {
         stage = new Stage();
         Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
         dragAndDrop = new DragAndDrop();
+        dragAndDrop.setDragActorPosition(-25,25);       //offset of dragable item
         lootDialog = createLootDialog(skin);
         stage.addActor(lootDialog);
     }
@@ -56,7 +60,7 @@ public class ContainerScreen implements Screen {
             init();                 //init if stage not exists
         }
         fillContainer();            //every show fill container table
-        fillInventory();            //every show fill player table
+//        fillInventory();            //every show fill player table
         Gdx.input.setInputProcessor(stage);
         lootDialog.setVisible(true);
         setNeedRender(true);
@@ -155,8 +159,8 @@ public class ContainerScreen implements Screen {
         for(int i=0 ; i<5;i++){
             for(int j=0;j<6;j++){
                 Slot slot = new Slot();
-                dragAndDrop.addSource(new DragSource(slot));
-                dragAndDrop.addTarget(new DragTarget(slot));
+                dragAndDrop.addSource(new DragSource(slot.getActor()));
+                dragAndDrop.addTarget(new DragTarget(slot.getActor()));
                 table.add(slot).width(50).height(50);
                 array.add(slot);
             }
@@ -174,7 +178,7 @@ public class ContainerScreen implements Screen {
                 //try update container inventory
                 sourceContainer.setInventory(updateContainer());
                 //try update player staff inventory
-                Warrior.setInventory(updateInventory());
+                updateInventory();
                 ScreenHelper.getContainer().hide();
             }
         });
@@ -187,22 +191,21 @@ public class ContainerScreen implements Screen {
         //foreach cell we create slot
         for(Slot s : containerSlots){
             if(!s.isEmpty()){
-                res.add(s.getItem());
+                res.add(s.getActor().getItem());
             }
         }
         return res;
     }
 
     //prepare array for player
-    private Array<Item> updateInventory(){
-        Array<Item> res = new Array<Item>();
+    private void updateInventory(){
+        Inventory inventory = Warrior.getInventory();
         //foreach cell we create slot
         for(Slot s : inventorySlots){
             if(!s.isEmpty()){
-                res.add(s.getItem());
+                inventory.store(s.getActor().getItem(),s.getActor().getAmount());
             }
         }
-        return res;
     }
 
     //fill container slots
@@ -210,15 +213,17 @@ public class ContainerScreen implements Screen {
         //get content from container object
         containerItems = sourceContainer.getInventory();
         for(int i=0;i<containerItems.size;i++){
-            containerSlots.get(i).setItem(containerItems.get(i));
+            containerSlots.get(i).getActor().setItem(containerItems.get(i));
         }
     }
 
     //fill inventory stack actors
     public void fillInventory(){
-        inventoryItems = Warrior.getInventory();
+        inventoryItems = Warrior.getInventory().getStashItems();
         for(int i=0;i<inventoryItems.size;i++){
-            inventorySlots.get(i).setItem(inventoryItems.get(i));
+            if(inventoryItems.get(i)!=null){
+                inventorySlots.get(i).getActor().setItem(inventoryItems.get(i));
+            }
         }
     }
 
@@ -226,5 +231,4 @@ public class ContainerScreen implements Screen {
     public static void setContainerSource(Container containerSource) {
         ContainerScreen.sourceContainer = containerSource;
     }
-
 }

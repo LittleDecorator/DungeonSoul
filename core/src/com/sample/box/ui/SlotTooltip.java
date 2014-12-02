@@ -1,3 +1,4 @@
+/*
 package com.sample.box.ui;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -46,3 +47,4 @@ public class SlotTooltip extends Window implements SlotListener {
     }
 
 }
+*/

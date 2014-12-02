@@ -6,11 +6,11 @@ import com.sample.box.ui.entity.Slot;
 
 public class DragTarget extends Target {
 
-    private Slot slot;
+    private ImageActor actor;
 
-    public DragTarget(Slot slot) {
-        super(slot.getActor());
-        this.slot = slot;
+    public DragTarget(ImageActor actor) {
+        super(actor);
+        this.actor = actor;
     }
 
     @Override
