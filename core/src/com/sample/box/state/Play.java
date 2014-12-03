@@ -17,6 +17,7 @@ import com.sample.box.factory.LevelFactory;
 import com.sample.box.factory.PlayerFactory;
 import com.sample.box.handlers.*;
 import com.sample.box.helpers.*;
+import com.sample.box.ui.stage.CharacterScreen;
 import com.sample.box.ui.stage.ContainerScreen;
 import com.sample.box.ui.stage.InventoryScreen;
 import com.sample.box.ui.stage.MenuScreen;
@@ -117,13 +118,14 @@ public class Play extends GameState {
         //draw collide sprite
         if(GameHelper.getGame().getGcl().isMayLoot()){
             Vector2 playerPos = new Vector2(player.getBody().getPosition());
-            SpriteHelper.renderTexture(sb,GameHelper.getGame().getResource().getTexture("hand"),playerPos.x*PPM,(playerPos.y+.3f)*PPM);
+            SpriteHelper.renderTexture(sb, GameHelper.getGame().getResource().getTexture("hand"), playerPos.x * PPM, (playerPos.y + .3f) * PPM);
         }
 
         mapInfo.getBarrel().render(sb);
         ScreenHelper.getInventory().render(Gdx.graphics.getDeltaTime());        //render inventory content
         ScreenHelper.getMenu().render(Gdx.graphics.getDeltaTime());             //render menu modal
         ScreenHelper.getContainer().render(Gdx.graphics.getDeltaTime());        //render loot table
+        ScreenHelper.getCharacter().render(Gdx.graphics.getDeltaTime());        //render character modal
     }
 
     public void dispose(){}
@@ -136,6 +138,7 @@ public class Play extends GameState {
         ScreenHelper.setInventory(new InventoryScreen());       //init inventory screen
         ScreenHelper.setMenu(new MenuScreen());                 //init menu screen
         ScreenHelper.setContainer(new ContainerScreen());            //init loot screen
+        ScreenHelper.setCharacter(new CharacterScreen());            //init character screen
         //init needed textures
         SpriteHelper.loadAllTextures();
     }

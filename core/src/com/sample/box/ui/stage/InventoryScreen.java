@@ -259,27 +259,7 @@ public class InventoryScreen implements Screen, StageListener {
         }
     }
 
-    //fill inventory staff
- /*   private void fillInventory(){
-        Array<ImageActor> staffPool = new Array<ImageActor>();
-        Array<Item> inventory = Warrior.getInventory().getStashItems();
-
-        //foreach cell we create slot
-        for(Cell cell: staff.getCells()) {
-            if (cell.getActor() instanceof Container) {
-                ImageActor actor = (ImageActor)((Container) cell.getActor()).getActor();
-                actor.clear();
-                staffPool.add(actor);
-            }
-        }
-
-        for(int k = 0 ; k< inventory.size; k++){
-            ImageActor endCellActor = staffPool.get(k);
-            endCellActor.setImage(inventory.get(k).getImage());
-        }
-    }*/
-
-        private void addClose(Window w, Skin skin){
+    private void addClose(Window w, Skin skin){
         TextButton closeButton = new TextButton("X", skin);
         closeButton.addListener(new HideInventoryListener(w));
         w.getButtonTable().add(closeButton).height(w.getPadTop());

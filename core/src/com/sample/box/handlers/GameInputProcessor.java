@@ -82,19 +82,23 @@ public class GameInputProcessor extends InputAdapter{
         if(k==Input.Keys.E && gcl.isMayLoot()){
             ScreenHelper.getContainer().show();
         }
-        //show menu
-        if(k== Input.Keys.ESCAPE && ((ContainerScreen)ScreenHelper.getContainer()).isVisible()){
+
+        //temporary disable
+        /*if(k== Input.Keys.ESCAPE && ((ContainerScreen)ScreenHelper.getContainer()).isVisible()){
             ScreenHelper.getContainer().hide();
         }
         if(k== Input.Keys.ESCAPE && ((InventoryScreen)ScreenHelper.getInventory()).isVisible()){
             ScreenHelper.getInventory().hide();
-        }
-        //temporary disable
-        /*if(k== Input.Keys.ESCAPE){
-            ScreenHelper.getMenu().show();
         }*/
+        //show menu
+        if(k== Input.Keys.ESCAPE){
+            ScreenHelper.getMenu().show();
+        }
         if(k == Input.Keys.I){
            ScreenHelper.getInventory().show();
+        }
+        if(k == Input.Keys.C){
+            ScreenHelper.getCharacter().show();
         }
         if(flag){
             body.getBody().applyForceToCenter(velocity,true);
