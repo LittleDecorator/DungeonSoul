@@ -3,14 +3,15 @@ package com.sample.box.ui.drag;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.*;
 import com.sample.box.ui.actor.ImageActor;
+import com.sample.box.ui.entity.Slot;
 
 public class DragSource extends Source {
 
     private ImageActor iActor;
 
-    public DragSource(ImageActor actor) {
-        super(actor);
-        this.iActor = actor;
+    public DragSource(Slot slot) {
+        super(slot.getActor());
+        this.iActor = slot.getActor();
     }
 
     //create payload of drag item
@@ -22,10 +23,10 @@ public class DragSource extends Source {
         }
         //create drag container
         Payload payload = new Payload();
-        //hide sourceimage cell
-        iActor.clear();
         //create source actor copy
         ImageActor pActor = new ImageActor(iActor.getItem(), iActor.getAmount());
+        //hide sourceimage cell
+        iActor.clear();
         //add actor as object to payload
         payload.setObject(pActor);
         // visualisation of draggable actor
@@ -54,12 +55,14 @@ public class DragSource extends Source {
                     tActor.setItem(oActor.getItem());
                     tActor.setAmount(oActor.getAmount());
                 } else {
-                    iActor.setImageFromItem();
+                    iActor.setItem(oActor.getItem());
+                    iActor.setAmount(oActor.getAmount());
                 }
             }
         } else {
             //the payload was not dropped over a target, thus put it back to where it came from
-            iActor.setImageFromItem();
+            iActor.setItem(oActor.getItem());
+            iActor.setAmount(oActor.getAmount());
         }
 
     }

@@ -57,8 +57,7 @@ public class GameContactListener implements ContactListener {
         }
 
         //if player collide with loot objects
-        if(dataBuff.contains("barrel")/* && ((Barrel)ObjectHelper.getObject("barrel")).getHealth()==0*/){
-            log("in barrel contact");
+        if(dataBuff.contains("barrel") && ((Barrel)ObjectHelper.getObject("barrel")).getHealth()==0){
             if(fb.getBody().getUserData() instanceof Barrel){
                 ContainerScreen.setContainerSource((Barrel)fb.getBody().getUserData());
             } else {

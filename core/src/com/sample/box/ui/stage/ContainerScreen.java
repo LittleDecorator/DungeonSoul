@@ -24,7 +24,7 @@ import com.sample.box.ui.entity.Slot;
 
 import java.util.Arrays;
 
-public class ContainerScreen implements Screen {
+public class ContainerScreen implements Screen, StageListener {
 
 //    private Table lootDialog;
     private Window lootDialog;
@@ -39,17 +39,20 @@ public class ContainerScreen implements Screen {
     private static Container sourceContainer;
 
     private Array<Item> containerItems;              //incoming container item array
-    private Array<Slot> containerSlots = new Array<Slot>();              //container slot array
-    private Array<Item> inventoryItems;              //player item array
-    private Array<Slot> inventorySlots = new Array<Slot>();              //player slot array
+    private Array<Slot> containerSlots =  new Array<Slot>();              //container slot array
+    private Array<Slot> inventorySlots;              //player slot array
 
     private boolean needRender = false;
 
     private void init(){
         stage = new Stage();
         Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
+
+        inventorySlots = Warrior.getInventory().getStashSlots();
+
         dragAndDrop = new DragAndDrop();
         dragAndDrop.setDragActorPosition(-25,25);       //offset of dragable item
+
         lootDialog = createLootDialog(skin);
         stage.addActor(lootDialog);
     }
@@ -57,13 +60,26 @@ public class ContainerScreen implements Screen {
     @Override
     public void show() {
         if(stage==null){
+            System.out.println("in container init");
             init();                 //init if stage not exists
+        } else {
+            fillStashCells();
         }
+        System.out.println("bf container fill");
+        System.out.println("inv slots -> " + inventorySlots.size);
         fillContainer();            //every show fill container table
-//        fillInventory();            //every show fill player table
         Gdx.input.setInputProcessor(stage);
         lootDialog.setVisible(true);
         setNeedRender(true);
+    }
+
+    @Override
+    public boolean isVisible() {
+        if(lootDialog == null){
+            return false;
+        } else {
+            return lootDialog.isVisible();
+        }
     }
 
     @Override
@@ -89,6 +105,7 @@ public class ContainerScreen implements Screen {
 
     @Override
     public void dispose() {
+        System.out.println("in container stage dispose");
         stage.dispose();
     }
 
@@ -111,7 +128,7 @@ public class ContainerScreen implements Screen {
 
         Window dialog = new Window("Loot dialog", skin);
 //        Table dialog = new Table(skin);
-        dialog.debug();
+//        dialog.debug();
 //        dialog.setBackground(getGray());
         addClose(dialog, skin);           // add header with close button
 
@@ -136,9 +153,9 @@ public class ContainerScreen implements Screen {
         cTarget.width(300).height(300).space(10);
 
         //now try fill inner tables
-        createTab(stash, skin, "Player Stash", inventorySlots);
-        createTab(target, skin, "Target Stash", containerSlots);
-
+        createUserTab(stash, skin, "Player Stash");
+        createTargetTab(target, skin, "Target Stash", containerSlots);
+//        dialog.setVisible(false);
         return dialog;
     }
 
@@ -151,16 +168,32 @@ public class ContainerScreen implements Screen {
     }*/
 
     //fill table cells with actor containers
-    private void createTab(Table table, Skin skin, String header, Array<Slot> array){
+    private void createUserTab(Table table, Skin skin, String header){
         TextField field = new TextField(header,skin);
         field.setDisabled(true);        //set disabled (can't write)
-        table.add(field).height(50).colspan(6).fillX();
+        table.add(field).height(50).colspan(5).fillX();
         table.row();
-        for(int i=0 ; i<5;i++){
-            for(int j=0;j<6;j++){
+        for(int i=0 ; i<4;i++){
+            for(int j=0;j<5;j++){
+                Slot slot = inventorySlots.get((i * 5) + j);
+                dragAndDrop.addSource(new DragSource(slot));
+                dragAndDrop.addTarget(new DragTarget(slot));
+                table.add(slot).width(50).height(50);
+            }
+            table.row();
+        }
+    }
+
+    private void createTargetTab(Table table, Skin skin, String header, Array<Slot> array){
+        TextField field = new TextField(header,skin);
+        field.setDisabled(true);        //set disabled (can't write)
+        table.add(field).height(50).colspan(5).fillX();
+        table.row();
+        for(int i=0 ; i<4;i++){
+            for(int j=0;j<5;j++){
                 Slot slot = new Slot();
-                dragAndDrop.addSource(new DragSource(slot.getActor()));
-                dragAndDrop.addTarget(new DragTarget(slot.getActor()));
+                dragAndDrop.addSource(new DragSource(slot));
+                dragAndDrop.addTarget(new DragTarget(slot));
                 table.add(slot).width(50).height(50);
                 array.add(slot);
             }
@@ -177,8 +210,6 @@ public class ContainerScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 //try update container inventory
                 sourceContainer.setInventory(updateContainer());
-                //try update player staff inventory
-                updateInventory();
                 ScreenHelper.getContainer().hide();
             }
         });
@@ -194,18 +225,8 @@ public class ContainerScreen implements Screen {
                 res.add(s.getActor().getItem());
             }
         }
+        clearTargetSlots();
         return res;
-    }
-
-    //prepare array for player
-    private void updateInventory(){
-        Inventory inventory = Warrior.getInventory();
-        //foreach cell we create slot
-        for(Slot s : inventorySlots){
-            if(!s.isEmpty()){
-                inventory.store(s.getActor().getItem(),s.getActor().getAmount());
-            }
-        }
     }
 
     //fill container slots
@@ -217,18 +238,27 @@ public class ContainerScreen implements Screen {
         }
     }
 
-    //fill inventory stack actors
-    public void fillInventory(){
-        inventoryItems = Warrior.getInventory().getStashItems();
-        for(int i=0;i<inventoryItems.size;i++){
-            if(inventoryItems.get(i)!=null){
-                inventorySlots.get(i).getActor().setItem(inventoryItems.get(i));
-            }
-        }
-    }
-
     //set container source
     public static void setContainerSource(Container containerSource) {
         ContainerScreen.sourceContainer = containerSource;
+    }
+
+    private void clearTargetSlots(){
+        for(Slot slot : containerSlots){
+            slot.clearSlot();
+        }
+    }
+
+    private void fillStashCells(){
+        Array<Cell> cells = stash.getCells();
+        for(int i=0 ; i<4;i++){
+            for(int j=0;j<5;j++){
+                Slot slot = inventorySlots.get((i * 5) + j);
+                Cell cell = cells.get(((i * 5) + j)+1);
+                dragAndDrop.addSource(new DragSource(slot));
+                dragAndDrop.addTarget(new DragTarget(slot));
+                cell.setActor(slot);
+            }
+        }
     }
 }

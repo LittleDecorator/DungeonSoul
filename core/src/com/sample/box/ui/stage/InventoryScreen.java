@@ -22,12 +22,14 @@ import com.sample.box.ui.entity.Item;
 import com.sample.box.ui.entity.Slot;
 import com.sample.box.ui.listeners.HideInventoryListener;
 
-public class InventoryScreen implements Screen {
+public class InventoryScreen implements Screen, StageListener {
 
     DragAndDrop dragAndDrop;
 
 //    private Table lootWindow;
     private Window lootWindow;
+
+    Table staff;
 
     Inventory inventory;
 
@@ -53,11 +55,24 @@ public class InventoryScreen implements Screen {
     @Override
     public void show() {
         if(stage==null){
+            System.out.println("in inventory init");
             init();
+        } else {
+            fillStashActors();
         }
+        System.out.println("in inventory fill");
         Gdx.input.setInputProcessor(stage);
         lootWindow.setVisible(true);
         setNeedRender(true);
+    }
+
+    @Override
+    public boolean isVisible() {
+        if(lootWindow==null){
+            return false;
+        } else {
+            return lootWindow.isVisible();
+        }
     }
 
     @Override
@@ -84,6 +99,7 @@ public class InventoryScreen implements Screen {
 
     @Override
     public void dispose() {
+        System.out.println("in inventory stage dispose");
         stage.dispose();
     }
 
@@ -114,7 +130,7 @@ public class InventoryScreen implements Screen {
 
         Table quick = new Table(skin);  //table for quiver,weapons,items
         Table person = new Table(skin); //table for character equip
-        Table staff = new Table(skin);  //table for quiver,weapons,items
+        staff = new Table(skin);  //table for quiver,weapons,items
 
 /*        quick.debug();
         person.debug();
@@ -140,7 +156,6 @@ public class InventoryScreen implements Screen {
         createQuick(quick,skin);
         createPerson(person);
         createStaff(staff);
-
         return inventory;
     }
 
@@ -162,8 +177,8 @@ public class InventoryScreen implements Screen {
         //arrows
         table.add(qLabel).width(150).height(30).colspan(3).space(0, 0, 5, 0).row();
         for(Slot slot : inventory.getQuiverSlots()){
-            dragAndDrop.addSource(new DragSource(slot.getActor()));
-            dragAndDrop.addTarget(new DragTarget(slot.getActor()));
+            dragAndDrop.addSource(new DragSource(slot));
+            dragAndDrop.addTarget(new DragTarget(slot));
             table.add(slot).width(50).height(50).space(0,0,15,0);
         }
         table.row();
@@ -171,8 +186,8 @@ public class InventoryScreen implements Screen {
         //weapons
         table.add(wLabel).width(150).height(30).colspan(3).space(0, 0, 5, 0).row();
         for(Slot slot : inventory.getWeaponSlots()){
-            dragAndDrop.addSource(new DragSource(slot.getActor()));
-            dragAndDrop.addTarget(new DragTarget(slot.getActor()));
+            dragAndDrop.addSource(new DragSource(slot));
+            dragAndDrop.addTarget(new DragTarget(slot));
             table.add(slot).width(50).height(50).space(0, 0,15, 0);
         }
         table.row();
@@ -180,8 +195,8 @@ public class InventoryScreen implements Screen {
         //items
         table.add(iLabel).width(150).height(30).colspan(3).space(0, 0, 5, 0).row();
         for(Slot slot : inventory.getItemSlots()){
-            dragAndDrop.addSource(new DragSource(slot.getActor()));
-            dragAndDrop.addTarget(new DragTarget(slot.getActor()));
+            dragAndDrop.addSource(new DragSource(slot));
+            dragAndDrop.addTarget(new DragTarget(slot));
             table.add(slot).width(50).height(50).space(0, 0,15, 0);
         }
     }
@@ -233,12 +248,11 @@ public class InventoryScreen implements Screen {
 
     private void createStaff(Table table){
         Array<Slot> slots = inventory.getStashSlots();
-        System.out.println(slots.size);
         for(int i=0 ; i<2;i++){
             for(int j=0;j<10;j++){
                 Slot slot = slots.get((i*10)+j);
-                dragAndDrop.addSource(new DragSource(slot.getActor()));
-                dragAndDrop.addTarget(new DragTarget(slot.getActor()));
+                dragAndDrop.addSource(new DragSource(slot));
+                dragAndDrop.addTarget(new DragTarget(slot));
                 table.add(slot).width(50).height(50);
             }
             table.row();
@@ -269,5 +283,19 @@ public class InventoryScreen implements Screen {
         TextButton closeButton = new TextButton("X", skin);
         closeButton.addListener(new HideInventoryListener(w));
         w.getButtonTable().add(closeButton).height(w.getPadTop());
+    }
+
+    private void fillStashActors(){
+        Array<Slot> slots = inventory.getStashSlots();
+        Array<Cell> cells = staff.getCells();
+        for(int i=0 ; i<2;i++){
+            for(int j=0;j<10;j++){
+                Slot slot = slots.get((i*10)+j);
+                Cell cell = cells.get((i*10)+j);
+                dragAndDrop.addSource(new DragSource(slot));
+                dragAndDrop.addTarget(new DragTarget(slot));
+                cell.setActor(slot);
+            }
+        }
     }
 }

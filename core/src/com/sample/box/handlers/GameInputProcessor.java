@@ -15,6 +15,7 @@ import com.sample.box.factory.FontFactory;
 import com.sample.box.helpers.GameHelper;
 import com.sample.box.helpers.ObjectHelper;
 import com.sample.box.helpers.ScreenHelper;
+import com.sample.box.ui.stage.ContainerScreen;
 import com.sample.box.ui.stage.InventoryScreen;
 
 import static com.sample.box.handlers.B2DVars.PPM;
@@ -82,9 +83,16 @@ public class GameInputProcessor extends InputAdapter{
             ScreenHelper.getContainer().show();
         }
         //show menu
-        if(k== Input.Keys.ESCAPE){
-            ScreenHelper.getMenu().show();
+        if(k== Input.Keys.ESCAPE && ((ContainerScreen)ScreenHelper.getContainer()).isVisible()){
+            ScreenHelper.getContainer().hide();
         }
+        if(k== Input.Keys.ESCAPE && ((InventoryScreen)ScreenHelper.getInventory()).isVisible()){
+            ScreenHelper.getInventory().hide();
+        }
+        //temporary disable
+        /*if(k== Input.Keys.ESCAPE){
+            ScreenHelper.getMenu().show();
+        }*/
         if(k == Input.Keys.I){
            ScreenHelper.getInventory().show();
         }

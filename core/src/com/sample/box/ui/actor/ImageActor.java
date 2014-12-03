@@ -57,6 +57,8 @@ public class ImageActor extends Image {
         if(!empty){
             setDrawable(null);
             empty = true;
+            item = null;
+            amount = 0;
         }
     }
 

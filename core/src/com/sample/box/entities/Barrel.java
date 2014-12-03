@@ -66,6 +66,7 @@ public class Barrel extends B2DSprite implements Destroyable, Container{
         sb.end();
     }
 
+    @Override
     public int getHealth() {
         return health;
     }
@@ -74,6 +75,7 @@ public class Barrel extends B2DSprite implements Destroyable, Container{
         this.health = health;
     }
 
+    @Override
     public void hit(){
         if(health>0){
             health -= 10;
@@ -81,14 +83,6 @@ public class Barrel extends B2DSprite implements Destroyable, Container{
             upVal = .1f;
         }
         System.out.println("health: "+health);
-    }
-
-    public Array<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(Array<Item> items) {
-        this.items = items;
     }
 
     @Override
