@@ -85,7 +85,7 @@ public class ContainerScreen implements Screen, StageListener {
     @Override
     public void render(float delta) {
         if(needRender){
-            Table.drawDebug(stage);
+//            Table.drawDebug(stage);
             stage.act(delta);
             stage.draw();
         }

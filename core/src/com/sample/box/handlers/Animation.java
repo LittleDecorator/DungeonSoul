@@ -57,4 +57,8 @@ public class Animation {
     public TextureRegion getFrame() { return frames[currentFrame]; }
     public int getTimesPlayed() { return timesPlayed; }
     public boolean hasPlayedOnce() { return timesPlayed > 0; }
+
+    public TextureRegion[] getFrames() {
+        return frames;
+    }
 }

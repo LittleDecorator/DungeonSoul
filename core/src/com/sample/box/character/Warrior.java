@@ -4,6 +4,7 @@ import box2dLight.ConeLight;
 import box2dLight.Light;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
+import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -151,5 +152,15 @@ public class Warrior extends B2DSprite implements Character{
 
     public static void setInventory(Inventory inventory) {
         Warrior.inventory = inventory;
+    }
+
+
+
+    /////////////////////////////////
+
+
+    @Override
+    public State getStartingState() {
+        return null;
     }
 }

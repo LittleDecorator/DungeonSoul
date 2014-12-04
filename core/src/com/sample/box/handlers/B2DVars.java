@@ -12,4 +12,6 @@ public class B2DVars {
     public static final short BIT_POINT = 8;
     public static final short BIT_DESTROYABLE = 16;
     public static final short BIT_CONTAINER = 32;
+
+    public static final short BIT_NPC = 64;
 }

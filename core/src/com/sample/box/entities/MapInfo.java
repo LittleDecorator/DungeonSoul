@@ -2,6 +2,7 @@ package com.sample.box.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
+import com.sample.box.character.AbstractCharacter;
 import com.sample.box.handlers.Background;
 
 public class MapInfo {
@@ -12,6 +13,8 @@ public class MapInfo {
     Texture backForest;
     Array<Point> points;
     Barrel barrel;
+
+    Array<AbstractCharacter> npc;
 
     public int getTileMapWidth() {
         return tileMapWidth;
@@ -67,5 +70,13 @@ public class MapInfo {
 
     public void setBackForest(Texture backForest) {
         this.backForest = backForest;
+    }
+
+    public Array<AbstractCharacter> getNpc() {
+        return npc;
+    }
+
+    public void setNpc(Array<AbstractCharacter> npc) {
+        this.npc = npc;
     }
 }

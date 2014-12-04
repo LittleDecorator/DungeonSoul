@@ -1,6 +1,7 @@
 package com.sample.box.character;
 
 import box2dLight.RayHandler;
+import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -39,4 +40,6 @@ public interface Character{
     public boolean isRightOrient();
 
     public int getLifeContainersCou();
+
+    public State getStartingState();
 }

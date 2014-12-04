@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.sample.box.Game;
+import com.sample.box.character.AbstractCharacter;
+import com.sample.box.character.NPC;
 import com.sample.box.entities.*;
 import com.sample.box.handlers.B2DVars;
 import com.sample.box.handlers.Content;
@@ -25,6 +27,7 @@ public class LevelFactory {
 
     private static Array<Point> points = new Array<Point>();
     private static Barrel barrel;
+    private static Array<AbstractCharacter> npc = new Array();
 
     private static void renderMap(World world,  TiledMap map){
         BodyDef bdef = new BodyDef();                               //create body
@@ -46,7 +49,7 @@ public class LevelFactory {
             fdef.shape = pshape;                                                //set shape to fixture
             fdef.friction = 0;
             fdef.filter.categoryBits = B2DVars.BIT_GROUND;           //def filter
-            fdef.filter.maskBits = B2DVars.BIT_PLAYER;              //def maskBits
+            fdef.filter.maskBits = B2DVars.BIT_PLAYER | B2DVars.BIT_NPC;              //def maskBits
             Body body = world.createBody(bdef);                     //create body
             body.createFixture(fdef).setUserData("floor");          //add user data to fixture, as marker
         }
@@ -127,6 +130,9 @@ public class LevelFactory {
         barrel = new Barrel(body);
         body.setUserData(barrel);                               //set barrel object itself to userData
         ObjectHelper.addObject("barrel",barrel);
+
+        //create hermit
+        npc.add(NPCFactory.buildHermit(world));
     }
 
     public static OrthogonalTiledMapRenderer buildEntrance(World world){
@@ -149,6 +155,7 @@ public class LevelFactory {
 
         info.setPoints(points);
         info.setBarrel(barrel);
+        info.setNpc(npc);
         LevelHelper.setMapInfo(info);
 
         return new OrthogonalTiledMapRenderer(tiledMap);

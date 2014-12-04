@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.sample.box.Game;
+import com.sample.box.character.AbstractCharacter;
 import com.sample.box.character.Character;
 import com.sample.box.entities.*;
 import com.sample.box.factory.LevelFactory;
@@ -68,6 +69,9 @@ public class Play extends GameState {
                 mapInfo.getPoints().get(i).update(Gdx.graphics.getDeltaTime());
             }
             mapInfo.getBarrel().update(Gdx.graphics.getDeltaTime());
+            for(AbstractCharacter character : mapInfo.getNpc()){
+                character.update(Gdx.graphics.getDeltaTime());
+            }
         }
     }
 
@@ -122,6 +126,9 @@ public class Play extends GameState {
         }
 
         mapInfo.getBarrel().render(sb);
+        for(AbstractCharacter character : mapInfo.getNpc()){
+            character.render(sb);
+        }
         ScreenHelper.getInventory().render(Gdx.graphics.getDeltaTime());        //render inventory content
         ScreenHelper.getMenu().render(Gdx.graphics.getDeltaTime());             //render menu modal
         ScreenHelper.getContainer().render(Gdx.graphics.getDeltaTime());        //render loot table

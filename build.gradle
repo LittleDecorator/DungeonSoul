@@ -15,7 +15,7 @@ allprojects {
     version = '1.0'
     ext {
         appName = 'AntVenture'
-        gdxVersion = '1.2.0'
+        gdxVersion = '1.4.1'
         roboVMVersion = '0.0.13'
     }
 
@@ -41,6 +41,7 @@ project(":desktop") {
         compile "com.badlogicgames.box2dlights:box2dlights:1.2"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-ai:1.4.0"
     }
 }
 
@@ -80,6 +81,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:1.2"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:1.4.0"
         /*compile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"*/
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"        //free-type
     }

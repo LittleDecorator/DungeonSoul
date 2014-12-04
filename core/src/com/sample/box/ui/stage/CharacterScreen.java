@@ -27,7 +27,7 @@ public class CharacterScreen implements Screen {
     @Override
     public void render(float delta) {
         if(needRender){
-            Table.drawDebug(stage);
+//            Table.drawDebug(stage);
             stage.act(delta);
             stage.draw();
         }
