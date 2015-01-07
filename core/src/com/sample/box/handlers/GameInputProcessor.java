@@ -12,11 +12,14 @@ import com.sample.box.character.Warrior;
 import com.sample.box.entities.Barrel;
 import com.sample.box.entities.DisplayElement;
 import com.sample.box.factory.FontFactory;
+import com.sample.box.helpers.DialogXMLHelper;
 import com.sample.box.helpers.GameHelper;
 import com.sample.box.helpers.ObjectHelper;
 import com.sample.box.helpers.ScreenHelper;
 import com.sample.box.ui.stage.ContainerScreen;
 import com.sample.box.ui.stage.InventoryScreen;
+
+import java.io.IOException;
 
 import static com.sample.box.handlers.B2DVars.PPM;
 import static com.sample.box.utils.Console.log;
@@ -99,6 +102,15 @@ public class GameInputProcessor extends InputAdapter{
         }
         if(k == Input.Keys.C){
             ScreenHelper.getCharacter().show();
+        }
+        if(k == Input.Keys.T && gcl.isMaySpeak()){
+            try {
+                DialogXMLHelper.startHermitDialog();
+                System.out.println("bf  show chat");
+                ScreenHelper.getChat().show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         if(flag){
             body.getBody().applyForceToCenter(velocity,true);

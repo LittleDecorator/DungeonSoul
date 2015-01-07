@@ -16,6 +16,7 @@ public class GameContactListener implements ContactListener {
     private int footContact;
     private int leftWallContact;
     private int rightWallContact;
+    private int hermitContact;
     private int enemyContact;
     private Array<Body> bodiesToRemove = new Array<Body>();
     private String dataBuff;
@@ -49,6 +50,10 @@ public class GameContactListener implements ContactListener {
             //if D key was pressed, then skip key release
             GameInput.mark4skip(GameInput.RIGHT);
             rightWallContact++;
+        }
+
+        if(dataBuff.contains("hermit")){
+            hermitContact++;
         }
 
         //hit enemy short_range
@@ -85,6 +90,10 @@ public class GameContactListener implements ContactListener {
         return mayLoot>0;
     }
 
+    public boolean isMaySpeak(){
+        return hermitContact>0;
+    }
+
     // called when two fixtures end to collide
     public void endContact(Contact c){
         Fixture fa = c.getFixtureA();
@@ -110,6 +119,10 @@ public class GameContactListener implements ContactListener {
 
         if(dataBuff.contains("barrel") && ((Barrel)ObjectHelper.getObject("barrel")).getHealth()==0){
             mayLoot--;
+        }
+
+        if(dataBuff.contains("hermit")){
+            hermitContact--;
         }
     }
 

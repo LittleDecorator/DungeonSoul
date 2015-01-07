@@ -8,6 +8,7 @@ public class ScreenHelper {
     private static Screen menu;
     private static Screen container;
     private static Screen character;
+    private static Screen chat;
 
     public static Screen getInventory() {
         return inventory;
@@ -39,5 +40,13 @@ public class ScreenHelper {
 
     public static void setCharacter(Screen character) {
         ScreenHelper.character = character;
+    }
+
+    public static Screen getChat() {
+        return chat;
+    }
+
+    public static void setChat(Screen chat) {
+        ScreenHelper.chat = chat;
     }
 }

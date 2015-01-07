@@ -18,10 +18,7 @@ import com.sample.box.factory.LevelFactory;
 import com.sample.box.factory.PlayerFactory;
 import com.sample.box.handlers.*;
 import com.sample.box.helpers.*;
-import com.sample.box.ui.stage.CharacterScreen;
-import com.sample.box.ui.stage.ContainerScreen;
-import com.sample.box.ui.stage.InventoryScreen;
-import com.sample.box.ui.stage.MenuScreen;
+import com.sample.box.ui.stage.*;
 
 import static com.sample.box.utils.Console.log;
 
@@ -129,10 +126,12 @@ public class Play extends GameState {
         for(AbstractCharacter character : mapInfo.getNpc()){
             character.render(sb);
         }
+
         ScreenHelper.getInventory().render(Gdx.graphics.getDeltaTime());        //render inventory content
         ScreenHelper.getMenu().render(Gdx.graphics.getDeltaTime());             //render menu modal
         ScreenHelper.getContainer().render(Gdx.graphics.getDeltaTime());        //render loot table
         ScreenHelper.getCharacter().render(Gdx.graphics.getDeltaTime());        //render character modal
+        ScreenHelper.getChat().render(Gdx.graphics.getDeltaTime());             //render chat modal
     }
 
     public void dispose(){}
@@ -146,6 +145,7 @@ public class Play extends GameState {
         ScreenHelper.setMenu(new MenuScreen());                 //init menu screen
         ScreenHelper.setContainer(new ContainerScreen());            //init loot screen
         ScreenHelper.setCharacter(new CharacterScreen());            //init character screen
+        ScreenHelper.setChat(new DialogStage());            //init chat screen
         //init needed textures
         SpriteHelper.loadAllTextures();
     }

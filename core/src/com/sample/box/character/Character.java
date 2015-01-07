@@ -13,6 +13,7 @@ import com.sample.box.entities.PositionedFixture;
 
 public interface Character{
 
+    /* это нужно вынести */
     public int getNumCrystals();
     public void collectCrystals();
     public void setTotalCrystals(int i);
@@ -23,6 +24,7 @@ public interface Character{
     public void flameOff();
     public RayHandler getFlame();
 
+    /* оставить */
     public void update(float dt);
     public void render(SpriteBatch sb);
     public Vector2 getPosition();
@@ -42,4 +44,6 @@ public interface Character{
     public int getLifeContainersCou();
 
     public State getStartingState();
+
+
 }
