@@ -1,0 +1,45 @@
+{
+  "startNode":1,
+  "middleNodes":[
+     {
+        "id": 1,
+        "text": "What can I do for you?",
+        "choice": [
+           {"text": "Cook me something good!", "next": 2},
+           {"text": "Nothing ... your're useless.", "next": 10}
+        ]
+     },
+     {
+        "id":2,
+        "text": "Ok ... How about some pancakes?",
+        "choice":[
+           {"text": "What kind of pancakes?", "next": 3},
+           {"text": "I hate pancakes. Go to hell.", "next": 10}
+        ]
+     },
+     {
+        "id":3,
+        "text": "Any... Can make with Lemon :)",
+        "choice":[
+        {"text": "Sounds great! Thank you.", "next": 4},
+        {"text": "No, I want with apple!", "next": 5},
+        {"text": "I kill you for Lemon", "next": 10}
+      ]
+    },
+    {
+      "id":4,
+      "text": "Where you go, ye pancakes!",
+      "choice":[
+        {"text": "Take and leave", "next": 10}
+      ]
+    },
+    {
+      "id":5,
+      "text": "No apples, go to hell!",
+      "choice":[
+        {"text": "Leave as a bitch", "next": 10}
+      ]
+    }
+  ],
+  "endNode":10
+}

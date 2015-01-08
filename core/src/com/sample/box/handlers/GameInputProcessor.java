@@ -12,7 +12,7 @@ import com.sample.box.character.Warrior;
 import com.sample.box.entities.Barrel;
 import com.sample.box.entities.DisplayElement;
 import com.sample.box.factory.FontFactory;
-import com.sample.box.helpers.DialogXMLHelper;
+import com.sample.box.helpers.DialogHelper;
 import com.sample.box.helpers.GameHelper;
 import com.sample.box.helpers.ObjectHelper;
 import com.sample.box.helpers.ScreenHelper;
@@ -103,14 +103,13 @@ public class GameInputProcessor extends InputAdapter{
         if(k == Input.Keys.C){
             ScreenHelper.getCharacter().show();
         }
-        if(k == Input.Keys.T && gcl.isMaySpeak()){
-            try {
-                DialogXMLHelper.startHermitDialog();
-                System.out.println("bf  show chat");
+        if(k == Input.Keys.T /*&& gcl.isMaySpeak()*/){
+//            try {
+                DialogHelper.startHermitDialog();
                 ScreenHelper.getChat().show();
-            } catch (IOException e) {
+            /*} catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
         if(flag){
             body.getBody().applyForceToCenter(velocity,true);

@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class LabelActor extends Label{
 
     String hiddenInput;
-    String id;
+    Integer id;
 
     public LabelActor(CharSequence text, Skin skin) {
         super(text, skin);
@@ -28,11 +28,11 @@ public class LabelActor extends Label{
         this.hiddenInput = hiddenInput;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

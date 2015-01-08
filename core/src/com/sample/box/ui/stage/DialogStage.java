@@ -6,7 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.sample.box.helpers.DialogXMLHelper;
+import com.sample.box.entities.dialog.Choice;
+import com.sample.box.helpers.DialogHelper;
 import com.sample.box.helpers.GameHelper;
 import com.sample.box.helpers.ScreenHelper;
 import com.sample.box.ui.actor.LabelActor;
@@ -87,7 +88,7 @@ public class DialogStage implements Screen, StageListener {
         }
     }
 
-    private Window createDialog(Skin skin){
+    private Window createDialog(final Skin skin){
         Window dialog = new Window("Chat dialog", skin);
 //        Table dialog = new Table(skin);
 //        dialog.debug();
@@ -114,21 +115,21 @@ public class DialogStage implements Screen, StageListener {
         Cell cTarget = dialog.add(answers);
         cTarget.width(300).height(300).space(10);
 
-        LabelActor qLabel = new LabelActor(DialogXMLHelper.actualQuestion,skin);
+        LabelActor qLabel = new LabelActor(DialogHelper.actualQuestion,skin);
         question.add(qLabel).height(50).colspan(5).fillX();
         question.row();
 
-        for(Map.Entry<String, String> entry : DialogXMLHelper.actualAnswers.entrySet()){
-            final LabelActor aLabel = new LabelActor(entry.getValue(),skin);
-            aLabel.setId(entry.getKey());
-            aLabel.addListener(new ClickListener(){
+        for(Choice c : DialogHelper.actualAnswers){
+            final LabelActor label = new LabelActor(c.getText(),skin);
+            label.setId(c.getNext());
+            label.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    DialogXMLHelper.next(aLabel.getId());
-                    refreshDialog();
+                    DialogHelper.next(label.getId());
+                    refreshDialog(skin);
                 }
             });
-            answers.add(aLabel).height(50).colspan(5).fillX().row();
+            answers.add(label).height(50).colspan(5).fillX().row();
         }
 
         return dialog;
@@ -153,13 +154,28 @@ public class DialogStage implements Screen, StageListener {
         w.getButtonTable().add(closeButton).height(w.getPadTop());
     }
 
-    private void refreshDialog(){
-        ((LabelActor)question.getCells().get(0).getActor()).setText(DialogXMLHelper.actualQuestion);
-        Object[]keys = DialogXMLHelper.actualAnswers.keySet().toArray();
-        int i =0;
-        for(Cell cell : answers.getCells()){
-            ((LabelActor)cell.getActor()).setText(DialogXMLHelper.actualAnswers.get(keys[i]));
-            i++;
+    private void refreshDialog(final Skin skin){
+        LabelActor actor;
+        if(DialogHelper.isOverDialog()){
+            hide();
+        } else {
+            //question update
+            actor = (LabelActor)question.getCells().get(0).getActor();
+            actor.setText(DialogHelper.actualQuestion);
+            //answers update
+            answers.clearChildren();
+            for(Choice c : DialogHelper.actualAnswers){
+                final LabelActor label = new LabelActor(c.getText(),skin);
+                label.setId(c.getNext());
+                label.addListener(new ClickListener(){
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        DialogHelper.next(label.getId());
+                        refreshDialog(skin);
+                    }
+                });
+                answers.add(label).height(50).colspan(5).fillX().row();
+            }
         }
     }
 
