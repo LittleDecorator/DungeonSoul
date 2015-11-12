@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.14.2'
+        classpath 'com.android.tools.build:gradle:1.2.3'
     }
 }
 
@@ -15,8 +15,8 @@ allprojects {
     version = '1.0'
     ext {
         appName = 'AntVenture'
-        gdxVersion = '1.4.1'
-        roboVMVersion = '0.0.13'
+        gdxVersion = '1.7.1'
+        roboVMVersion = '1.9.0'
     }
 
     repositories {
@@ -38,14 +38,14 @@ project(":desktop") {
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-controllers-desktop:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.box2dlights:box2dlights:1.2"
+        compile "com.badlogicgames.box2dlights:box2dlights:1.4"
         compile "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-        compile "com.badlogicgames.gdx:gdx-ai:1.4.0"
+        compile "com.badlogicgames.gdx:gdx-ai:1.6.0"
     }
 }
 
-project(":android") {
+/*project(":android") {
     apply plugin: "android"
 
     configurations { natives }
@@ -60,7 +60,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
-        compile "com.badlogicgames.box2dlights:box2dlights:1.2"
+        compile "com.badlogicgames.box2dlights:box2dlights:1.4"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
 
@@ -70,7 +70,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
 
     }
-}
+}*/
 
 project(":core") {
     apply plugin: "java"
@@ -79,9 +79,9 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        compile "com.badlogicgames.box2dlights:box2dlights:1.2"
+        compile "com.badlogicgames.box2dlights:box2dlights:1.4"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx-ai:1.4.0"
+        compile "com.badlogicgames.gdx:gdx-ai:1.6.0"
         /*compile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"*/
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"        //free-type
     }

@@ -213,7 +213,8 @@ public class ContainerScreen implements Screen, StageListener {
                 ScreenHelper.getContainer().hide();
             }
         });
-        w.getButtonTable().add(closeButton).height(w.getPadTop());
+//        w.getButtonTable().add(closeButton).height(w.getPadTop());
+        w.getTitleTable().add(closeButton).height(w.getPadTop());
     }
 
     //prepare array for container

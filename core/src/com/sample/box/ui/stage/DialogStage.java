@@ -151,7 +151,8 @@ public class DialogStage implements Screen, StageListener {
                 ScreenHelper.getChat().hide();
             }
         });
-        w.getButtonTable().add(closeButton).height(w.getPadTop());
+//        w.getButtonTable().add(closeButton).height(w.getPadTop());
+        w.getTitleTable().add(closeButton).height(w.getPadTop());
     }
 
     private void refreshDialog(final Skin skin){

@@ -15,7 +15,7 @@ public class MenuActor extends Window {
         //add button listener
         closeButton.addListener(new HideMenuListener(this));
         //work with window as table
-        getButtonTable().add(closeButton).height(getPadTop());
+//        getButtonTable().add(closeButton).height(getPadTop());
 
         //some buttons
         TextButton buttonNew = new TextButton("New Game", skin);

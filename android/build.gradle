@@ -1,6 +1,6 @@
 android {
-    buildToolsVersion "19.1.0"
-    compileSdkVersion 19
+    buildToolsVersion "23.0.1"
+    compileSdkVersion 20
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -60,8 +60,8 @@ eclipse {
     }
 
     jdt {
-        sourceCompatibility = 1.6
-        targetCompatibility = 1.6
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 
     classpath {

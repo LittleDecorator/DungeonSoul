@@ -314,6 +314,6 @@ public class CharacterScreen implements Screen {
                 ScreenHelper.getCharacter().hide();
             }
         });
-        w.getButtonTable().add(closeButton).height(w.getPadTop());
+        w.getTitleTable().add(closeButton).height(w.getPadTop());
     }
 }

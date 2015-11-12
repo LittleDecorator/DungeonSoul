@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.utils.*;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.sample.box.character.Warrior;
 import com.sample.box.helpers.GameHelper;
@@ -262,7 +263,8 @@ public class InventoryScreen implements Screen, StageListener {
     private void addClose(Window w, Skin skin){
         TextButton closeButton = new TextButton("X", skin);
         closeButton.addListener(new HideInventoryListener(w));
-        w.getButtonTable().add(closeButton).height(w.getPadTop());
+//        w.getButtonTable().add(closeButton).height(w.getPadTop());
+        w.getTitleTable().add(closeButton).height(w.getPadTop());
     }
 
     private void fillStashActors(){
